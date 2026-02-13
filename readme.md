@@ -1,5 +1,19 @@
 # Speech2Latex
 
+# ProcessLaTeXFormulaTools
+
+In `./ProcessLaTeXFormulaTools` there is code for latex normalization.
+
+And main python code `ProcessLaTeXFormulaTools/process_formula/normalize_formulas.py`
+
+```python
+from ProcessLaTeXFormulaTools.process_formula import NormalizeFormula
+
+norm = NormalizeFormula(check_node=False)
+
+print(norm(" \sum_i^n i ")) # [ '\\sum_{i}^{n}i' ]
+```
+
 
 ## Gemma for Speech2LaTeX
 

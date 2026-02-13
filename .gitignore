@@ -1,6 +1,13 @@
 __pycache__
+ckpts_old/
+ckpts_unnormalized/
+ckpts_lora_multilang
+ckpts_archive
+math_speech_ckpts
 ckpts
 .ipynb_checkpoints/
+ckpts_audio_tower_exclude/
+ckpts_attention_only_lora/
 
 *.csv
 MathSpeech_whisper_transcribed/

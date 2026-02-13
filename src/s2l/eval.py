@@ -44,6 +44,9 @@ class LatexInContextMetrics:
 
         for pred, ref in zip(predictions, references):
         # for pred, ref in tqdm(zip(predictions, references)):
+            if pred == '':
+                all_scores.append(0)
+                continue
             all_scores.append(texbleu(ref, pred))
 
         return sum(all_scores) / len(all_scores)

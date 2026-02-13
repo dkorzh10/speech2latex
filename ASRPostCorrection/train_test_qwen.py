@@ -43,6 +43,7 @@ def test(
         model_name,
         pron_column_name = 'whisper_text',
         latex_column_name = 'sentence',
+        transcribation_column_name = None,
     ):
 
     DEVICE='cuda'
@@ -56,7 +57,7 @@ def test(
 
     outputs = defaultdict(list)
 
-    test_dataset = ASRDataset(test_dataset, pron_column_name=pron_column_name, latex_column_name=latex_column_name)
+    test_dataset = ASRDataset(test_dataset, pron_column_name=pron_column_name, latex_column_name=latex_column_name, transcribation_column_name=args.transcribation_column_name)
 
     # formulas normalization will be performed in batched_model_generation
     collate_function = get_collate_function(tokenizer, model_name, process_formulas=None)
@@ -68,7 +69,15 @@ def test(
 
         generated_latex = batched_model_generation(model, tokenizer, batch, device=DEVICE)
 
-        predicted_text = generated_latex['predicted_text']
+        predicted_text = []
+        if transcribation_column_name is None:
+            predicted_text = generated_latex['predicted_text']
+        else:
+            for item in generated_latex['predicted_text']:
+                item_split = item.split('LaTex: ')
+                latex_only = item_split[-1]
+                predicted_text.append(latex_only)
+
         target_text = generated_latex['target_text']
 
         outputs['latex_pred'].extend(predicted_text)
@@ -88,6 +97,7 @@ if __name__ == "__main__":
     parser.add_argument('--config', type=str, default='./config-4.json')
     parser.add_argument('--dataset_split', required=True, choices=['sentences', 'equations'])
     parser.add_argument('--latex_column_name', required=True, choices=['sentence', 'sentence_normalized'])
+    parser.add_argument('--transcribation_column_name', default=None)
     parser.add_argument('--language', required=True, choices=['eng', 'ru', 'multilingual'])
     parser.add_argument('--data_type', required=True, choices=['human', 'synthetic_small', 'synthetic_full', 'mix', 'mix_full'])
 
@@ -98,6 +108,7 @@ if __name__ == "__main__":
     parser.add_argument('--test_equations_my_normalized', action='store_true')
     parser.add_argument('--test_equations_unnormalized', action='store_true')
     parser.add_argument('--test_sentences', action='store_true')
+    parser.add_argument('--balanced_sampling', action='store_true', help='Enable balanced RU/EN sampling for multilingual training')
     args = parser.parse_args()
 
 
@@ -119,11 +130,20 @@ if __name__ == "__main__":
             r=cfg.lora_r,
             lora_alpha=cfg.lora_alpha,
             # target_modules=["q_proj", "k_proj", "v_proj", "o_proj", "gate_proj", "down_proj", "up_proj"],
-            target_modules=["q_proj", "k_proj", "v_proj", "o_proj"],
+            target_modules=cfg.target_modules,
         )
 
         model = get_peft_model(model, lora_config)
         print("model", model)
+    elif hasattr(cfg, 'unfreeze_head_and_last_layer') and cfg.unfreeze_head_and_last_layer:
+        for p in model.parameters():
+            p.requires_grad = False
+        for p in model.lm_head.parameters():
+            p.requires_grad = True
+        for p in model.model.layers[-2:].parameters():
+            p.requires_grad = True
+
+    print("Trainable params:", sum(p.numel() for p in model.parameters() if p.requires_grad))
 
     ### Work with data
     collate_function = get_collate_function(tokenizer, cfg.model_ckpt)
@@ -138,6 +158,8 @@ if __name__ == "__main__":
     latex_column_name = args.latex_column_name
 
     columns_to_keep = {pron_column_name, latex_column_name, 'is_tts', 'language'}
+    if args.transcribation_column_name is not None:
+        columns_to_keep.add(args.transcribation_column_name)
 
     train_dataset = train_dataset.remove_columns(set(train_dataset.column_names) - columns_to_keep)
     test_dataset = test_dataset.remove_columns(set(test_dataset.column_names) - columns_to_keep)
@@ -176,8 +198,32 @@ if __name__ == "__main__":
     print("Train dataset size", len(train_dataset))
     print("Test dataset size", len(test_dataset))
 
-    train_dataset = ASRDataset(train_dataset, pron_column_name=pron_column_name, latex_column_name=latex_column_name)
-    train_loader = get_dataloader(train_dataset, cfg.batch_size, collate_function, cfg.num_workers, train=True)
+    # Prepare optional balanced RU/EN sampler for multilingual training
+    balanced_sampler = None
+    if args.balanced_sampling:
+        if args.language != 'multilingual':
+            print("Warning: --balanced_sampling is only applicable with --language multilingual; ignoring.")
+        else:
+            langs = train_dataset['language']
+            num_ru = sum(1 for l in langs if l == 'ru')
+            num_eng = sum(1 for l in langs if l == 'eng')
+            if num_ru > 0 and num_eng > 0:
+                # Inverse-frequency weights to balance classes
+                weights = [
+                    (1.0 / num_ru) if l == 'ru' else ((1.0 / num_eng) if l == 'eng' else 0.0)
+                    for l in langs
+                ]
+                balanced_sampler = torch.utils.data.WeightedRandomSampler(
+                    weights=weights,
+                    num_samples=len(langs),
+                    replacement=True,
+                )
+                print("Balanced RU/EN sampling enabled for training.")
+            else:
+                print("Warning: --balanced_sampling requested but both RU and ENG are not present; using default sampling.")
+
+    train_dataset = ASRDataset(train_dataset, pron_column_name=pron_column_name, latex_column_name=latex_column_name, transcribation_column_name=args.transcribation_column_name)
+    train_loader = get_dataloader(train_dataset, cfg.batch_size, collate_function, cfg.num_workers, train=True, sampler=balanced_sampler)
 
     module = Model_pl(cfg, len(train_loader), model, model_config, tokenizer)
 
@@ -204,6 +250,7 @@ if __name__ == "__main__":
     module.to('cuda')
 
     if args.language != 'multilingual':
+        # If there was no language in training split, it can't be processed
         test_dataset = test_dataset.filter(lambda x: x['language'] == args.language)
 
     if args.few_test_samples is not None:

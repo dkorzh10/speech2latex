@@ -68,8 +68,6 @@ if __name__ == "__main__":
     parser.add_argument('--data_type', type=str, choices=['human', 'synthetic_small', 'mix'], required=True)
     parser.add_argument('--latex_column_name', type=str, choices=['sentence', 'sentence_normalized'], required=True)
 
-    parser.add_argument('--few_test_samples', type=int, default=None)
-
 
     args = parser.parse_args()
 
@@ -102,9 +100,9 @@ if __name__ == "__main__":
     os.makedirs(results_save_dir, exist_ok=True)
 
     test_splits = [
-        (test_dataset_artificial, 'artificial'),
-        (test_dataset_humans, 'humans'),
         (test_dataset_mix, 'mix'),
+        # (test_dataset_artificial, 'artificial'),
+        # (test_dataset_humans, 'humans'),
     ]
 
     model.to('cuda')
@@ -114,9 +112,8 @@ if __name__ == "__main__":
             model,
             processor,
             test_dataset,
-            few_samples=args.few_test_samples,
             latex_column_name=latex_column_name,
-            compute_text_only=(args.dataset_split == 'sentences'),
+            # compute_text_only=(args.dataset_split == 'sentences'),
         )
         output_file_path = os.path.join(results_save_dir, f'{test_split}_metrics.json')
         with open(output_file_path, 'w') as f:

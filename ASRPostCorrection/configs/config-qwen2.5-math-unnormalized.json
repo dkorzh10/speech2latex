@@ -1,0 +1,11 @@
+{
+      "exp_name": "asr-unnormalized-Qwen2.5-math-1.5B-instruct",
+      "model_ckpt": "Qwen/Qwen2.5-Math-1.5B-Instruct",
+      "n_epochs": 1,
+      "grad_accum": 1,
+      "learning_rate": 1e-4,
+      "prompt": "This is a dialog with AI assistant.\n",
+      "num_workers": 0,
+      "batch_size": 16,
+      "ckp_iterations_step": 100000
+  }
