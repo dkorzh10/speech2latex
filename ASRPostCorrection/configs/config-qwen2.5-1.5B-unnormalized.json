@@ -1,5 +1,5 @@
 {
-    "exp_name": "asr-normalized-Qwen2.5-1.5B-instruct",
+    "exp_name": "asr-unnormalized-Qwen2.5-1.5B-instruct",
     "model_ckpt": "Qwen/Qwen2.5-1.5B-Instruct",
     "n_epochs": 1,
     "grad_accum": 1,

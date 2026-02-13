@@ -1,8 +1,7 @@
 {
-      "exp_name": "asr-normalized-Qwen2.5-7B-instruct",
+      "exp_name": "asr-normalized-Qwen2.5-7B-instruct-partial-unfreeze",
       "model_ckpt": "Qwen/Qwen2.5-7B-Instruct",
-      "lora_r": 8,
-      "lora_alpha": 32,
+      "unfreeze_head_and_last_layer": true,
       "n_epochs": 1,
       "grad_accum": 1,
       "learning_rate": 1e-4,

@@ -22,7 +22,7 @@ if __name__ == "__main__":
             result = client.run_job(
                 payload={
                     'script': f"bash {workdir}/run_jobs_asr_s2l_equations.sh --model_type {model_type} --shard_number {shard_number} --total_shards {total_shards}",
-                    'job_desc': f'ASR S2L Equations {model_type} shard {shard_number} of {total_shards} #{author_name} #rnd #multimodal @mrsndmn',
+                    'job_desc': f'ASR S2L Equations {model_type} shard {shard_number} of {total_shards} #{author_name} #rnd #multimodal  #notify_completed @mrsndmn',
                     'env_variables': {
                         'PYTHONPATH': './',
                         'HF_HOME': '/workspace-SR004.nfs2/.cache/huggingface',

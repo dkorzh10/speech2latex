@@ -93,8 +93,8 @@ def load_metrics(ckpt_dir: str, model_type: str = 'ASR-PC') -> Dict[str, Dict[st
             print(f"Warning: Could not load {file_path}: File not found")
             broken_exp = True
 
-    if broken_exp:
-        return None
+    # if broken_exp:
+    #     return None
 
     return metrics
 
@@ -210,6 +210,13 @@ def build_s2l_equations_table(experiments):
                 'Qwen2.5-1.5B-instruct-test': 'Q-1.5B',
                 'Qwen2.5-math-1.5B-instruct': 'Q-math-1.5B',
                 'Qwen2.5-7B-instruct': 'Q-7B',
+                'Qwen2.5-7B-instruct-partial-unfreeze': 'Q-7B-pu',
+                'Qwen2.5-7B-instruct-r16a64': 'Q-7B-r16a64',
+                'Qwen2.5-7B-instruct-r8a32': 'Q-7B-r8a32',
+                'Qwen2-Audio-7B-instruct-LoRa-r16-a32-lr1e-4': 'QA-7B-r16a32',
+                'Qwen2-Audio-7B-instruct-LoRa-r16-a64-lr1e-4': 'QA-7B-r16a64',
+                'Qwen2-Audio-7B-instruct-LoRa-r8-a32-lr1e-4': 'QA-7B-r8a32',
+                'Qwen2-Audio-7B-instruct-LoRa-r8-a16-lr1e-4': 'QA-7B-r8a16',
             }
 
             data_type_mapping = {
@@ -253,7 +260,7 @@ def build_s2l_equations_table(experiments):
 
     # Sort by dataset_split, language, data_type
 
-    models_order = [ 'Q-0.5B', 'Q-1.5B', 'Q-math-1.5B', 'Q-7B' ]
+    models_order = [ 'Q-0.5B', 'Q-1.5B', 'Q-math-1.5B', 'Q-7B', 'QA-7B', 'Q-7B-pu', 'Q-7B-r16a64', 'Q-7B-r8a32', 'QA-7B-r16a32', 'QA-7B-r16a64', 'QA-7B-r8a32', 'QA-7B-r8a16']
     train_split_order = [ 'Mix-full', 'Mix', 'H', 'A', '-' ]
     languages_order = [ 'Eng+Ru', 'Eng', 'Ru', ]
 
@@ -395,12 +402,17 @@ def main():
         if not os.path.isdir(model_experiments):
             continue
 
+        # if 'unnormalized' not in model_name:
+        #     continue
+
         model_name = model_name.replace('asr-normalized-', '')
+        model_name = model_name.replace('asr-unnormalized-', '')
         if model_name == 'pretrained_Qwen2.5-0.5B':
             continue
         
         print("model_experiments", model_experiments)
         for item in os.listdir(model_experiments):
+
             item_path = os.path.join(model_experiments, item)
             if not os.path.isdir(item_path):
                 continue
@@ -423,13 +435,12 @@ def main():
 
     # experiments = []
     qwen_audio_experiments = [
-        '../Multimodal/qwen_audio/ckpts/qwen2-audio-7b-instruct',
-        '../Multimodal/qwen_audio/ckpts/qwen2-audio-7b-instruct-lora-r8-a32-fix2',
-        '../Multimodal/qwen_audio/ckpts/qwen2-audio-7b-instruct-lora-r16-a32-fix',
-        # '../Multimodal/qwen_audio/ckpts/qwen2-audio-7b-instruct-lora-r16-a32-fix2-only-attention',
-        # '../Multimodal/qwen_audio/ckpts/qwen2-audio-7b-instruct-lora-r16-a32-fix2-only-attention-with-audio',
+        '../Multimodal/qwen_audio/ckpts/qwen2-audio-7b-instruct-lora-r8-a32-lr1e-4',
+        # '../Multimodal/qwen_audio/ckpts/qwen2-audio-7b-instruct-lora-r16-a32-lr1e-4',
+        # '../Multimodal/qwen_audio/ckpts/qwen2-audio-7b-instruct-lora-r8-a16-lr1e-4',
+        '../Multimodal/qwen_audio/ckpts/qwen2-audio-7b-instruct-lora-r16-a64-lr1e-4',
     ]
-    qwen_audio_experiments = []
+    # qwen_audio_experiments = []
     for qwen_audio_experiment in qwen_audio_experiments:
         for item in os.listdir(qwen_audio_experiment):
             item_path = os.path.join(qwen_audio_experiment, item)
@@ -440,8 +451,9 @@ def main():
 
             # Parse experiment properties
             properties = parse_experiment_name(model_name, item, model_type='Multimodal')
-            if properties['language'] != 'eng':
-                continue
+            # if properties['language'] != 'eng':
+            #     breakpoint()
+            #     continue
 
             # Load metrics
             metrics = load_metrics(item_path, model_type='Multimodal')
@@ -477,11 +489,11 @@ def main():
         'metrics': load_metrics('../MathSpeech/Experiments'),
         'path': ''
     }
+    # equations_experiments.append(mathspeech_experiment)
 
-    equations_experiments.append(mathspeech_experiment)
 
-    equations_experiments = [ exp for exp in experiments if exp['properties']['model_name'] not in ['proofGPT-1.3B', 'Llama-3.2-1B-Instruct', 'Qwen2.5-1.5B-instruct-test'] ]
-    equations_experiments = [ exp for exp in experiments if exp['properties']['language'] == 'multilingual' ]
+    # equations_experiments = [ exp for exp in experiments if exp['properties']['model_name'] not in ['proofGPT-1.3B', 'Llama-3.2-1B-Instruct', 'Qwen2.5-1.5B-instruct-test'] ]
+    # equations_experiments = [ exp for exp in experiments if exp['properties']['language'] == 'multilingual' ]
 
     sentences_experiments = [exp for exp in experiments if exp['properties']['dataset_split'] == 'sentences']
 

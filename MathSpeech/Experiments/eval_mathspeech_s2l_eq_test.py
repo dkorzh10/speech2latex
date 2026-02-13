@@ -1,7 +1,7 @@
 import json
 import sys
 import pandas as pd
-from s2l.eval import LatexInContextMetrics
+# from s2l.eval import LatexInContextMetrics
 
 import datasets
 
@@ -16,7 +16,7 @@ if __name__ == "__main__":
     latex_true_column = 'LaTeX'
     latex_pred_column = 'MathSpeech_LaTeX_result'
 
-    dataset_orig = datasets.load_dataset('marsianin500/Speech2Latex', split='equations_test')
+    dataset_orig = datasets.load_dataset('marsianin500/Speech2Latex', split='equations_test', num_proc=8)
 
     dataset_orig_is_tts = dataset_orig['is_tts']
     dataset_orig_language = dataset_orig['language']
@@ -25,6 +25,12 @@ if __name__ == "__main__":
 
     df['is_tts'] = dataset_orig_is_tts
     df['language'] = dataset_orig_language
+
+    joined_csv = file_path.replace('.csv', '_is_tts_lang.csv')
+    print("joined_csv", joined_csv)
+    breakpoint()
+    df.to_csv(joined_csv)
+    breakpoint()
 
     # if not math_speech_bench:
     df[latex_pred_column] = df[latex_pred_column].apply(lambda x: x.replace(' ', '').replace('\displaystyle', '').replace('\operatorname', ''))

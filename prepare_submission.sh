@@ -52,7 +52,7 @@ fi
 rm sample_datasets.py
 
 mv ./sample_datasets ../
-mv ./Speech2Latex_APPENDIX.pdf ../
+# mv ./Speech2Latex_APPENDIX.pdf ../
 
 cd ../../
 

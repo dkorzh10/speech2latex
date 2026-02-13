@@ -11,11 +11,12 @@ from process_formula import NormalizeFormula
 
 
 class ASRDataset(Dataset):
-    def __init__(self, dataset, pron_column_name='pron', latex_column_name='latex'):
+    def __init__(self, dataset, pron_column_name='pron', latex_column_name='latex', transcribation_column_name=None):
         self.dataset = dataset
 
         self.pron_column_name = pron_column_name
         self.latex_column_name = latex_column_name
+        self.transcribation_column_name = transcribation_column_name
 
     def __len__(self):
         return len(self.dataset)
@@ -23,12 +24,15 @@ class ASRDataset(Dataset):
 
     def __getitem__(self, idx):
         item = self.dataset[idx]
-        return {
+        result_item = {
             "pron": item[self.pron_column_name],
             "latex": item[self.latex_column_name],
         }
+        if self.transcribation_column_name is not None:
+            result_item[self.transcribation_column_name] = item[self.transcribation_column_name]
+        return result_item
 
-def get_collate_function(tokenizer, model_name, process_formulas=None, latex_column='latex', whisper_column='pron'):
+def get_collate_function(tokenizer, model_name, process_formulas=None, latex_column='latex', whisper_column='pron', transcribation_column_name=None):
 
     user_instructions_prefix = [
         # 'Translate  transcribation to LaTex formula: '
@@ -60,8 +64,13 @@ def get_collate_function(tokenizer, model_name, process_formulas=None, latex_col
             chat = [
                 {"role": "system", "content": "You are a helpful assistant."},
                 {"role": "user", "content": f"{user_instruction_prefix}{pronunciation}"},
-                {"role": "assistant", "content": f"{latex}"},
             ]
+
+            if transcribation_column_name is None:
+                chat.append({"role": "assistant", "content": f"{latex}"})
+            else:
+                transcribation = dataset_item[transcribation_column_name]
+                chat.append({"role": "assistant", "content": f"Fixed transcribation: {transcribation}\nLaTex: {latex}"})
             
             all_chats.append(chat)
             all_chats_no_assistant_answer.append(chat[:2])
@@ -102,12 +111,17 @@ def get_dataloader(dataset: Dataset,
                    batch_size: int,
                    collate_fn: Callable,
                    num_workers: int,
-                   train: bool = False) -> DataLoader:
-    
-    return DataLoader(dataset=dataset, 
-                      batch_size=batch_size, 
-                      collate_fn=collate_fn, 
-                      num_workers=num_workers, 
-                      shuffle=train, 
-                      drop_last=train,
-                      pin_memory=True,)
+                   train: bool = False,
+                   sampler=None) -> DataLoader:
+    # If a sampler is provided, disable shuffle to satisfy DataLoader constraints
+    effective_shuffle = (train and sampler is None)
+    return DataLoader(
+        dataset=dataset,
+        batch_size=batch_size,
+        collate_fn=collate_fn,
+        num_workers=num_workers,
+        shuffle=effective_shuffle,
+        drop_last=train,
+        pin_memory=True,
+        sampler=sampler,
+    )
