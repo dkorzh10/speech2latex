@@ -2,12 +2,15 @@
 
 [![Paper](https://img.shields.io/badge/arXiv-2508.03542-b31b1b.svg)](https://arxiv.org/abs/2508.03542)
 [![Project page](https://img.shields.io/badge/Project%20Page-GitHub%20Pages-0969da.svg)](https://mrsndmn.github.io/speech2latex/)
+[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/dkorzh10/speech2latex/blob/main/demo_speech2latex.ipynb)
 
 Converting spoken mathematical expressions into LaTeX: models, datasets, and benchmarks for **S2L-equations** and **S2L-sentences** in English and Russian.
 
 **Paper:** [Speech-to-LaTeX: New Models and Datasets for Converting Spoken Equations and Sentences](https://arxiv.org/abs/2508.03542) (arXiv:2508.03542)
 
 **Project page (demos & samples):** [GitHub Pages](https://mrsndmn.github.io/speech2latex/) — enable in repo **Settings → Pages → Source: Deploy from branch → Branch: main (or master) → /docs**.
+
+**Colab demo:** [Open in Colab](https://colab.research.google.com/github/dkorzh10/speech2latex/blob/main/demo_speech2latex.ipynb) — run ASR post-correction in the browser; choose a model, play repo samples (no dataset download), or record/upload your own audio.
 
 ---
 
@@ -127,6 +130,35 @@ PYTHONPATH=. python run_qwen_demo.py --ckpt /path/to/checkpoint --output ../docs
 ```
 
 Without `--samples_csv`: the script loads HuggingFace `marsianin500/Speech2Latex`, matches samples to `sample_datasets/`, runs Whisper on local wavs, then Qwen. With `--samples_csv`: use a CSV with columns `split`, `sample_id`, `whisper_transcription`, `reference_latex`. Commit `docs/demo_results.json` so the project page can show reference vs predicted LaTeX per sample.
+
+### Upload checkpoints to Hugging Face
+
+Upload selected ckpts to [marsianin500](https://huggingface.co/marsianin500) for the Colab demo:
+
+```shell
+cd ASRPostCorrection
+pip install huggingface_hub
+huggingface-cli login
+python upload_ckpts_to_hf.py [--ckpts_dir ./ckpts] [--dry_run]
+```
+
+See `upload_ckpts_to_hf.py` for the list of models (0.5B, 1.5B, math-1.5B, 7B LoRA). Repo IDs: `marsianin500/<base>-<variant>`.
+
+### ASR post-correction models on Hugging Face
+
+Pre-trained checkpoints (use in Colab demo or load with `transformers`):
+
+| Model | Hugging Face |
+|-------|--------------|
+| Qwen2.5-0.5B (equations, multilingual mix) | [marsianin500/Qwen2.5-0.5B-instruct-equations_multilingual_mix](https://huggingface.co/marsianin500/Qwen2.5-0.5B-instruct-equations_multilingual_mix) |
+| Qwen2.5-0.5B (equations, multilingual mix full) | [marsianin500/Qwen2.5-0.5B-instruct-equations_multilingual_mix_full](https://huggingface.co/marsianin500/Qwen2.5-0.5B-instruct-equations_multilingual_mix_full) |
+| Qwen2.5-0.5B (sentences, eng mix) | [marsianin500/Qwen2.5-0.5B-instruct-sentences_eng_mix](https://huggingface.co/marsianin500/Qwen2.5-0.5B-instruct-sentences_eng_mix) |
+| Qwen2.5-1.5B (equations, multilingual mix) | [marsianin500/Qwen2.5-1.5B-instruct-equations_multilingual_mix](https://huggingface.co/marsianin500/Qwen2.5-1.5B-instruct-equations_multilingual_mix) |
+| Qwen2.5-math-1.5B (equations, multilingual mix full) | [marsianin500/Qwen2.5-math-1.5B-instruct-equations_multilingual_mix_full](https://huggingface.co/marsianin500/Qwen2.5-math-1.5B-instruct-equations_multilingual_mix_full) |
+| Qwen2.5-math-1.5B (equations, multilingual mix) | [marsianin500/Qwen2.5-math-1.5B-instruct-equations_multilingual_mix](https://huggingface.co/marsianin500/Qwen2.5-math-1.5B-instruct-equations_multilingual_mix) |
+| Qwen2.5-math-1.5B (sentences, eng mix) | [marsianin500/Qwen2.5-math-1.5B-instruct-sentences_eng_mix](https://huggingface.co/marsianin500/Qwen2.5-math-1.5B-instruct-sentences_eng_mix) |
+| Qwen2.5-7B LoRA (equations, multilingual mix) | [marsianin500/Qwen2.5-7B-instruct-r16a64-equations_multilingual_mix](https://huggingface.co/marsianin500/Qwen2.5-7B-instruct-r16a64-equations_multilingual_mix) |
+| Qwen2.5-7B LoRA (equations, multilingual mix full) | [marsianin500/Qwen2.5-7B-instruct-r16a64-equations_multilingual_mix_full](https://huggingface.co/marsianin500/Qwen2.5-7B-instruct-r16a64-equations_multilingual_mix_full) |
 
 ---
 

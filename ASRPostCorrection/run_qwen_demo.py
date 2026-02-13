@@ -220,9 +220,9 @@ def main():
             "split": row["split"],
             "sample_id": row["sample_id"],
             "audio_path": audio_path,
-            "reference_latex": row["reference_latex"],
+            "reference_latex": row["reference_latex"].replace("\\\\", " "),
             "whisper_transcription": row["whisper_transcription"],
-            "predicted_latex": predictions[i],
+            "predicted_latex": predictions[i].replace("\\\\", " "),
         })
 
     out_data = {

@@ -5,9 +5,9 @@
       "split": "equations_test",
       "sample_id": "human_eng_00",
       "audio_path": "sample_datasets/equations_test/human_eng_00.wav",
-      "reference_latex": "$\\text{det}(A-\\lambda\\\\I)=0$",
+      "reference_latex": "$\\text{det}(A-\\lambda I)=0$",
       "whisper_transcription": "The agent values of a matrix-say are the values of its characteristic planar-no.",
-      "predicted_latex": "\\text{Spec}(A)=\\{c_{i}\\in\\mathbb\\\\C\\mid\\\\A\\text{isdiagonalizableand}c_{ii}=0\\}"
+      "predicted_latex": "\\text{Spec}(A)=\\{c_{i}\\in\\mathbb C\\mid A\\text{isdiagonalizableand}c_{ii}=0\\}"
     },
     {
       "split": "equations_test",
@@ -23,7 +23,7 @@
       "audio_path": "sample_datasets/equations_test/human_eng_02.wav",
       "reference_latex": "$w:=u-u^{\\prime}$",
       "whisper_transcription": "W is defined as U-U prime.",
-      "predicted_latex": "w\\coloneqq\\\\u-u^{\\prime}"
+      "predicted_latex": "w\\coloneqq u-u^{\\prime}"
     },
     {
       "split": "equations_test",
@@ -63,7 +63,7 @@
       "audio_path": "sample_datasets/equations_test/human_ru_03.wav",
       "reference_latex": "$x_{k}$",
       "whisper_transcription": "Икскатер",
-      "predicted_latex": "\\mathbf\\\\I_{k}"
+      "predicted_latex": "\\mathbf I_{k}"
     },
     {
       "split": "equations_test",
@@ -133,7 +133,7 @@
       "split": "equations_train",
       "sample_id": "human_eng_00",
       "audio_path": "sample_datasets/equations_train/human_eng_00.wav",
-      "reference_latex": "$\\mathcal\\\\X={x_{1},\\dots,x_{|\\mathcal\\\\X|}}$",
+      "reference_latex": "$\\mathcal X={x_{1},\\dots,x_{|\\mathcal X|}}$",
       "whisper_transcription": "x equals open curly brace x sub 1 comma ellipsis comma x sub absolute value of x equals stop x.",
       "predicted_latex": "X={x_{1},\\ldots,x_{|X|}}"
     },
@@ -141,7 +141,7 @@
       "split": "equations_train",
       "sample_id": "human_eng_01",
       "audio_path": "sample_datasets/equations_train/human_eng_01.wav",
-      "reference_latex": "$\\mathcal\\\\X={\\xi_{0},\\xi_{1},\\ldots,\\xi_{r}}$",
+      "reference_latex": "$\\mathcal X={\\xi_{0},\\xi_{1},\\ldots,\\xi_{r}}$",
       "whisper_transcription": "Mfx equals the set containing c sub 0, c sub 1 dot dot dot, c sub r.",
       "predicted_latex": "M(x)={c_{0},c_{1},...,c_{r}}"
     },
@@ -149,17 +149,17 @@
       "split": "equations_train",
       "sample_id": "human_eng_02",
       "audio_path": "sample_datasets/equations_train/human_eng_02.wav",
-      "reference_latex": "$\\mathcal\\\\X_{lim}\\subseteq\\mathcal\\\\X^{2}$",
+      "reference_latex": "$\\mathcal X_{lim}\\subseteq\\mathcal X^{2}$",
       "whisper_transcription": "MFx sublimit is a subset of MFx squared.",
-      "predicted_latex": "MF(x_{\\lim})\\subset\\\\MF(x)^{2}"
+      "predicted_latex": "MF(x_{\\lim})\\subset MF(x)^{2}"
     },
     {
       "split": "equations_train",
       "sample_id": "human_eng_03",
       "audio_path": "sample_datasets/equations_train/human_eng_03.wav",
-      "reference_latex": "$\\mathcal\\\\X,\\mathcal\\\\Y,\\mathcal\\\\Z\\subseteq\\mathcal\\\\V$",
+      "reference_latex": "$\\mathcal X,\\mathcal Y,\\mathcal Z\\subseteq\\mathcal V$",
       "whisper_transcription": "Mathical X, Mathical Y, Mathical Z, subset of Mathical V.",
-      "predicted_latex": "\\mathcal\\\\X,\\mathcal\\\\Y,\\mathcal{Z}\\subseteq\\mathcal{V}"
+      "predicted_latex": "\\mathcal X,\\mathcal Y,\\mathcal{Z}\\subseteq\\mathcal{V}"
     },
     {
       "split": "equations_train",
@@ -197,9 +197,9 @@
       "split": "equations_train",
       "sample_id": "tts_eng_00",
       "audio_path": "sample_datasets/equations_train/tts_eng_00.wav",
-      "reference_latex": "$-1.01\\pm\\\\0.18$",
+      "reference_latex": "$-1.01\\pm 0.18$",
       "whisper_transcription": "1.01 plus minus 0.88.",
-      "predicted_latex": "1.001\\pm\\\\0.008"
+      "predicted_latex": "1.001\\pm 0.008"
     },
     {
       "split": "equations_train",
@@ -215,23 +215,23 @@
       "audio_path": "sample_datasets/equations_train/tts_eng_02.wav",
       "reference_latex": "$(I)\\Rightarrow(X)$",
       "whisper_transcription": "I implies X.",
-      "predicted_latex": "I\\to\\\\X"
+      "predicted_latex": "I\\to X"
     },
     {
       "split": "equations_train",
       "sample_id": "tts_eng_03",
       "audio_path": "sample_datasets/equations_train/tts_eng_03.wav",
-      "reference_latex": "$(Q+\\alpha\\\\V,R+\\alpha\\\\W)$",
+      "reference_latex": "$(Q+\\alpha V,R+\\alpha W)$",
       "whisper_transcription": "you quite alpha V R alpha W",
-      "predicted_latex": "u_{\\alpha}v_{\\alpha\\\\w}"
+      "predicted_latex": "u_{\\alpha}v_{\\alpha w}"
     },
     {
       "split": "equations_train",
       "sample_id": "tts_ru_00",
       "audio_path": "sample_datasets/equations_train/tts_ru_00.wav",
-      "reference_latex": "$\\int\\\\x^{4}dx$",
+      "reference_latex": "$\\int x^{4}dx$",
       "whisper_transcription": "интеграл x в степени 4dx.",
-      "predicted_latex": "\\int\\\\x^{4}dx"
+      "predicted_latex": "\\int x^{4}dx"
     },
     {
       "split": "equations_train",
@@ -263,7 +263,7 @@
       "audio_path": "sample_datasets/sentences_test/human_eng_00.wav",
       "reference_latex": "Given a fixed graph $F$, a typical problem in extremal graph theory asks for the maximum number of edges that a large graph $G$ on $n$ vertices containing no copy of $F$ can have, denoted by $\\text{ex}(n,F)$.",
       "whisper_transcription": "Given a fixed graph F, a typical problem in extreme graph theory asks for the maximum number of edges that have large graph G on n vertices containing no copy of F can have denote by x of n F.",
-      "predicted_latex": "X(n,F)=\\max\\{\\deg_{G}^{F}(v):\\\\ \\{v\\}\\in\\{X(n,F)\\}\\}"
+      "predicted_latex": "X(n,F)=\\max\\{\\deg_{G}^{F}(v):  \\{v\\}\\in\\{X(n,F)\\}\\}"
     },
     {
       "split": "sentences_test",
@@ -271,23 +271,23 @@
       "audio_path": "sample_datasets/sentences_test/human_eng_01.wav",
       "reference_latex": "Given a fixed graph $F$, a typical problem in extremal graph theory asks for the maximum number of edges that a large graph $G$ on $n$ vertices containing no copy of $F$ can have, denoted by $\\text{ex}(n,F)$.",
       "whisper_transcription": "Given a fixed graph capital F, a typical problem in external graph theory asks for the maximum number of edges, the large graph capital G on N, where the size containing no copy of capital F can have, denoted by X of N capital F.",
-      "predicted_latex": "E(F)=\\max\\{\\sum_{i=1}^{n}\\binom{|V(G_{i})|}{2}\\colon\\\\G_{n}\\notin\\\\F\\}"
+      "predicted_latex": "E(F)=\\max\\{\\sum_{i=1}^{n}\\binom{|V(G_{i})|}{2}\\colon G_{n}\\notin F\\}"
     },
     {
       "split": "sentences_test",
       "sample_id": "human_eng_02",
       "audio_path": "sample_datasets/sentences_test/human_eng_02.wav",
-      "reference_latex": "We will omit the subscript $\\mathcal\\\\P$ or $\\mathcal\\\\S$ if it is clear from the context.",
+      "reference_latex": "We will omit the subscript $\\mathcal P$ or $\\mathcal S$ if it is clear from the context.",
       "whisper_transcription": "We will omit the subscript script B or script S if it is clear from the context.",
-      "predicted_latex": "\\Xi_{\\mathcal\\\\B,\\mathcal\\\\S}"
+      "predicted_latex": "\\Xi_{\\mathcal B,\\mathcal S}"
     },
     {
       "split": "sentences_test",
       "sample_id": "human_eng_03",
       "audio_path": "sample_datasets/sentences_test/human_eng_03.wav",
-      "reference_latex": "We will omit the subscript $\\mathcal\\\\P$ or $\\mathcal\\\\S$ if it is clear from the context.",
+      "reference_latex": "We will omit the subscript $\\mathcal P$ or $\\mathcal S$ if it is clear from the context.",
       "whisper_transcription": "We will augment the subscript, script p or script s if it's clear from the context.",
-      "predicted_latex": "\\Xi_{\\mathcal\\\\P}"
+      "predicted_latex": "\\Xi_{\\mathcal P}"
     },
     {
       "split": "sentences_test",
@@ -295,7 +295,7 @@
       "audio_path": "sample_datasets/sentences_test/tts_eng_00.wav",
       "reference_latex": "Given a fixed graph $F$, a typical problem in extremal graph theory asks for the maximum number of edges that a large graph $G$ on $n$ vertices containing no copy of $F$ can have, denoted by $\\text{ex}(n,F)$.",
       "whisper_transcription": "Given a fixed graph F, a typical problem in extremal graph theory asks for the maximum number of edges that a large graph G on N vertices containing no copy of F can have denoted by X of N comma F N.",
-      "predicted_latex": "\\text{ex}(n,F)=\\max\\{m\\geq\\\\1\\colon\\\\G\\text{containsno}F^{(m)}\\}."
+      "predicted_latex": "\\text{ex}(n,F)=\\max\\{m\\geq 1\\colon G\\text{containsno}F^{(m)}\\}."
     },
     {
       "split": "sentences_test",
@@ -303,7 +303,7 @@
       "audio_path": "sample_datasets/sentences_test/tts_eng_01.wav",
       "reference_latex": "Given a fixed graph $F$, a typical problem in extremal graph theory asks for the maximum number of edges that a large graph $G$ on $n$ vertices containing no copy of $F$ can have, denoted by $\\text{ex}(n,F)$.",
       "whisper_transcription": "Given a fixed graph F, a typical problem in extremal graph theory asks for the maximum number of edges that a large graph G on N vertices containing no copy of F can have denoted by XNFF.",
-      "predicted_latex": "\\text{ex}(F)=\\max\\{n\\geq\\\\1\\mid\\\\G_{n}\\not\\cong\\\\F\\}."
+      "predicted_latex": "\\text{ex}(F)=\\max\\{n\\geq 1\\mid G_{n}\\not\\cong F\\}."
     },
     {
       "split": "sentences_test",
@@ -311,7 +311,7 @@
       "audio_path": "sample_datasets/sentences_test/tts_eng_02.wav",
       "reference_latex": "Given a fixed graph $F$, a typical problem in extremal graph theory asks for the maximum number of edges that a large graph $G$ on $n$ vertices containing no copy of $F$ can have, denoted by $\\text{ex}(n,F)$.",
       "whisper_transcription": "Given a fixed graph F, a typical problem in extreme graph theory asks for the maximum number of edges that a large graph, G-on and vertices containing NO, copy of F can have denoted by X of N, F.",
-      "predicted_latex": "X(n,F)=\\max\\{i\\in\\mathbb\\\\N:\\\\G_{i}(n,F)\\}"
+      "predicted_latex": "X(n,F)=\\max\\{i\\in\\mathbb N: G_{i}(n,F)\\}"
     },
     {
       "split": "sentences_test",
@@ -319,7 +319,7 @@
       "audio_path": "sample_datasets/sentences_test/tts_eng_03.wav",
       "reference_latex": "Given a fixed graph $F$, a typical problem in extremal graph theory asks for the maximum number of edges that a large graph $G$ on $n$ vertices containing no copy of $F$ can have, denoted by $\\text{ex}(n,F)$.",
       "whisper_transcription": "given a fixed graph F. A typical problem in extreme graph theory asks for the maximum number of edges that a large graph, G-on, and vertices containing no copy of F can have denoted by X and F.",
-      "predicted_latex": "\\text{max}_{G\\cong\\\\F}\\left\\{\\sum_{v\\in\\\\V(G)\\setminus\\{f\\}}d_{G}(v,f)\\right\\}"
+      "predicted_latex": "\\text{max}_{G\\cong F}\\left\\{\\sum_{v\\in V(G)\\setminus\\{f\\}}d_{G}(v,f)\\right\\}"
     },
     {
       "split": "sentences_train",
@@ -335,7 +335,7 @@
       "audio_path": "sample_datasets/sentences_train/human_eng_01.wav",
       "reference_latex": "The smaller the value of $\\eta$, the harder it is for a human to perceive the perturbation in the image, and on the other hand, a larger $1-\\delta$ value (i.e., a smaller $\\delta$ value) implies a stronger attack that is more powerful for generating a desired perturbation.",
       "whisper_transcription": "The smaller the value of eta, the harder it is for a human to perceive the perturbation in the image and on other hand, a larger 1-delta value, i.e. smaller delta value, implies a stronger attack that is more powerful for generating a desired perturbation.",
-      "predicted_latex": "\\eta\\ll\\\\1\\quad\\text{when}\\quad\\mathrm{perceptibleperturbations}\\quad;\\\\ \\quad\\delta\\mathrm{\\text{value}}\\,\\mathrm{\\textit{larger}},\\quad\\mathrm{{morepowerfulattacks}}"
+      "predicted_latex": "\\eta\\ll 1\\quad\\text{when}\\quad\\mathrm{perceptibleperturbations}\\quad;  \\quad\\delta\\mathrm{\\text{value}}\\,\\mathrm{\\textit{larger}},\\quad\\mathrm{{morepowerfulattacks}}"
     },
     {
       "split": "sentences_train",
@@ -343,7 +343,7 @@
       "audio_path": "sample_datasets/sentences_train/human_eng_02.wav",
       "reference_latex": "Also look at the following rows where high accuracies are attained with $S_{\\zeta_{d}}$ and $S_{\\chi_{D}}$.",
       "whisper_transcription": "Also, look at the phone rows where high-quarances are retained with capital S subscript D and capital S subscript KI subscript capital D.",
-      "predicted_latex": "\\hat{\\boldsymbol{S}}_{\\mathcal\\\\D}=\\boldsymbol{\\mathcal\\\\S}_{d}^{S_{k}}\\boldsymbol{\\Psi}_{\\mathcal{D}}"
+      "predicted_latex": "\\hat{\\boldsymbol{S}}_{\\mathcal D}=\\boldsymbol{\\mathcal S}_{d}^{S_{k}}\\boldsymbol{\\Psi}_{\\mathcal{D}}"
     },
     {
       "split": "sentences_train",
@@ -351,7 +351,7 @@
       "audio_path": "sample_datasets/sentences_train/human_eng_03.wav",
       "reference_latex": "Also look at the following rows where high accuracies are attained with $S_{\\zeta_{d}}$ and $S_{\\chi_{D}}$.",
       "whisper_transcription": "Also look at the following rows where height accuracies are detained with S, NZD and S,",
-      "predicted_latex": "also\\\\let\\\\the\\\\following\\\\rows\\\\contain\\\\height\\\\accuracies\\\\for\\\\S,"
+      "predicted_latex": "also let the following rows contain height accuracies for S,"
     },
     {
       "split": "sentences_train",
