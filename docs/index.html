@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Speech-to-LaTeX — Models and Datasets</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=JetBrains+Mono:wght@400;500&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #f6f8fa;
+      --surface: #ffffff;
+      --border: #d0d7de;
+      --text: #1f2328;
+      --muted: #656d76;
+      --accent: #0969da;
+      --accent-soft: rgba(9, 105, 218, 0.1);
+      --math: #1a7f37;
+      --serif: 'DM Serif Display', Georgia, serif;
+      --sans: 'Outfit', system-ui, sans-serif;
+      --mono: 'JetBrains Mono', ui-monospace, monospace;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--sans);
+      font-weight: 400;
+      line-height: 1.6;
+      min-height: 100vh;
+    }
+
+    .wrap {
+      max-width: 820px;
+      margin: 0 auto;
+      padding: 2.5rem 1.5rem 4rem;
+    }
+
+    h1 {
+      font-family: var(--serif);
+      font-size: clamp(2rem, 5vw, 2.75rem);
+      font-weight: 400;
+      margin: 0 0 0.25rem;
+      letter-spacing: -0.02em;
+    }
+
+    .subtitle {
+      color: var(--muted);
+      font-size: 1.05rem;
+      margin-bottom: 2rem;
+    }
+
+    .badges {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-bottom: 2.5rem;
+    }
+
+    .badges a {
+      display: inline-flex;
+      align-items: center;
+      padding: 0.35rem 0.75rem;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      color: var(--text);
+      text-decoration: none;
+      font-size: 0.9rem;
+      transition: border-color 0.2s, background 0.2s;
+    }
+
+    .badges a:hover {
+      border-color: var(--accent);
+      background: var(--accent-soft);
+    }
+
+    h2 {
+      font-family: var(--serif);
+      font-size: 1.5rem;
+      font-weight: 400;
+      margin: 2.5rem 0 1rem;
+      color: var(--text);
+    }
+
+    .contributions {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 1.25rem 1.5rem;
+      margin: 1rem 0;
+    }
+
+    .contributions ul {
+      margin: 0;
+      padding-left: 1.35rem;
+    }
+
+    .contributions li {
+      margin-bottom: 0.65rem;
+    }
+
+    .contributions li:last-child {
+      margin-bottom: 0;
+    }
+
+    .contributions a {
+      color: var(--accent);
+      text-decoration: none;
+    }
+
+    .contributions a:hover {
+      text-decoration: underline;
+    }
+
+    .samples-section {
+      margin-top: 2rem;
+    }
+
+    .samples-controls {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+      align-items: flex-end;
+      margin-bottom: 1rem;
+    }
+
+    .control-group {
+      display: flex;
+      flex-direction: column;
+      gap: 0.35rem;
+    }
+
+    .control-group label {
+      font-size: 0.8rem;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .control-group select {
+      font-family: var(--mono);
+      font-size: 0.9rem;
+      padding: 0.5rem 0.75rem;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      color: var(--text);
+      min-width: 160px;
+      cursor: pointer;
+    }
+
+    .control-group select:hover,
+    .control-group select:focus {
+      border-color: var(--accent);
+      outline: none;
+    }
+
+    .player-box {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 1.25rem;
+      margin-top: 0.5rem;
+    }
+
+    .player-box audio {
+      width: 100%;
+      height: 48px;
+      margin-bottom: 0.5rem;
+    }
+
+    .player-box .sample-label {
+      font-family: var(--mono);
+      font-size: 0.85rem;
+      color: var(--muted);
+    }
+
+    .demo-results {
+      margin-top: 1rem;
+      padding: 1rem;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+    }
+
+    .demo-results .row {
+      margin-bottom: 0.75rem;
+    }
+
+    .demo-results .row:last-child {
+      margin-bottom: 0;
+    }
+
+    .demo-results .label {
+      font-size: 0.75rem;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 0.25rem;
+    }
+
+    .demo-results .latex-block {
+      font-family: var(--mono);
+      font-size: 0.9rem;
+      word-break: break-all;
+      padding: 0.5rem;
+      background: var(--bg);
+      border-radius: 4px;
+      color: var(--text);
+    }
+
+    .demo-results .katex-display {
+      margin: 0.5rem 0;
+      overflow-x: auto;
+    }
+
+    .demo-results .no-results {
+      color: var(--muted);
+      font-size: 0.9rem;
+    }
+
+    footer {
+      margin-top: 3rem;
+      padding-top: 1.5rem;
+      border-top: 1px solid var(--border);
+      font-size: 0.9rem;
+      color: var(--muted);
+    }
+
+    footer a {
+      color: var(--accent);
+      text-decoration: none;
+    }
+
+    footer a:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <h1>Speech-to-LaTeX</h1>
+    <p class="subtitle">New models and datasets for converting spoken equations and sentences</p>
+
+    <div class="badges">
+      <a href="https://arxiv.org/abs/2508.03542">📄 Paper (arXiv:2508.03542)</a>
+      <a href="https://github.com/dkorzh10/speech2latex">💻 Code</a>
+      <a href="https://huggingface.co/datasets/marsianin500/Speech2Latex">🤗 Dataset</a>
+    </div>
+
+    <h2>Main contributions</h2>
+    <div class="contributions">
+      <ul>
+        <li>We release the first large-scale, open-source dataset of spoken mathematical expressions and sentences (<strong>S2L-sentences</strong>, <strong>S2L-equations</strong>) in English and Russian: <a href="https://huggingface.co/datasets/marsianin500/Speech2Latex" target="_blank" rel="noopener">Hugging Face — marsianin500/Speech2Latex</a>. It includes 66k human and 571k synthetic audio samples with diverse pronunciations and complexities.</li>
+        <li>We evaluate multiple S2L methods based on ASR post-correction, few-shot prompting, and audio-LLM integration, demonstrating strong performance across metrics and outperforming MathSpeech on several tasks.</li>
+        <li>We conduct a comprehensive evaluation using relevant metrics to establish robust baselines and detailed analysis for future S2L research. Code: <a href="https://github.com/dkorzh10/speech2latex" target="_blank" rel="noopener">github.com/dkorzh10/speech2latex</a>.</li>
+      </ul>
+    </div>
+
+    <h2>Sample audio (Qwen2.5 0.5B)</h2>
+    <p class="subtitle" style="margin-bottom: 0.5rem;">From <code style="background: var(--surface); padding: 0.15rem 0.4rem; border-radius: 4px;">./sample_datasets/</code> — equations and sentences, train/test, human and TTS (EN/RU where available).</p>
+
+    <div class="samples-section">
+      <div class="samples-controls">
+        <div class="control-group">
+          <label for="split">Split</label>
+          <select id="split">
+            <option value="equations_test">equations_test</option>
+            <option value="equations_train">equations_train</option>
+            <option value="sentences_test">sentences_test</option>
+            <option value="sentences_train">sentences_train</option>
+          </select>
+        </div>
+        <div class="control-group">
+          <label for="sample">Sample</label>
+          <select id="sample"></select>
+        </div>
+      </div>
+      <div class="player-box">
+        <audio id="audio" controls preload="metadata"></audio>
+        <div class="sample-label" id="sample-label">—</div>
+        <div class="demo-results" id="demo-results" style="display: none;">
+          <div class="row">
+            <div class="label">Reference LaTeX</div>
+            <div class="latex-block" id="demo-reference"></div>
+          </div>
+          <div class="row">
+            <div class="label">Model prediction (ASR post-correction)</div>
+            <div class="latex-block" id="demo-predicted"></div>
+          </div>
+          <div class="row">
+            <div class="label">Whisper transcription (input)</div>
+            <div class="latex-block" id="demo-whisper"></div>
+          </div>
+        </div>
+        <div class="demo-results no-results" id="demo-no-results" style="display: none;">No demo results for this sample. Run <code>run_qwen_demo.py</code> and add <code>docs/demo_results.json</code> to the repo.</div>
+      </div>
+    </div>
+
+    <h2>Citation</h2>
+    <p class="subtitle">If you use this work, please cite:</p>
+    <div class="contributions" style="margin-top: 0.5rem;">
+      <p style="margin: 0 0 0.5rem;">Korzh et al., <strong>Speech-to-LaTeX: New Models and Datasets for Converting Spoken Equations and Sentences</strong>, ICLR 2026. <a href="https://openreview.net/forum?id=gk8WMxzIQP" target="_blank" rel="noopener">OpenReview</a> · <a href="https://arxiv.org/abs/2508.03542" target="_blank" rel="noopener">arXiv:2508.03542</a></p>
+      <pre style="margin: 0; font-size: 0.8rem; overflow-x: auto; white-space: pre; color: var(--text); background: var(--bg); padding: 0.75rem; border-radius: 6px;">@inproceedings{korzh2026speechtolatex,
+  title={Speech-to-LaTeX: New Models and Datasets for Converting Spoken Equations and Sentences},
+  author={Korzh, Dmitrii and Tarasov, Dmitrii and Iudin, Artyom and Karimov, Elvir and Skripkin, Matvey and Kuzmin, Nikita and Kuznetsov, Andrey and Rogov, Oleg and Oseledets, Ivan},
+  booktitle={The Fourteenth International Conference on Learning Representations},
+  year={2026},
+  url={https://openreview.net/forum?id=gk8WMxzIQP}
+}</pre>
+    </div>
+
+    <footer>
+      <a href="https://openreview.net/forum?id=gk8WMxzIQP">Korzh et al., Speech-to-LaTeX, ICLR 2026</a>.
+    </footer>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js" crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css" crossorigin="anonymous">
+  <script>
+    (function () {
+      var GITHUB_RAW = 'https://raw.githubusercontent.com/mrsndmn/speech2latex/main';
+      var SAMPLES = {
+        equations_test: ['human_eng_00', 'human_eng_01', 'human_eng_02', 'human_eng_03', 'human_ru_00', 'human_ru_01', 'human_ru_02', 'human_ru_03', 'tts_eng_00', 'tts_eng_01', 'tts_eng_02', 'tts_eng_03', 'tts_ru_00', 'tts_ru_01', 'tts_ru_02', 'tts_ru_03'],
+        equations_train: ['human_eng_00', 'human_eng_01', 'human_eng_02', 'human_eng_03', 'human_ru_00', 'human_ru_01', 'human_ru_02', 'human_ru_03', 'tts_eng_00', 'tts_eng_01', 'tts_eng_02', 'tts_eng_03', 'tts_ru_00', 'tts_ru_01', 'tts_ru_02', 'tts_ru_03'],
+        sentences_test: ['human_eng_00', 'human_eng_01', 'human_eng_02', 'human_eng_03', 'tts_eng_00', 'tts_eng_01', 'tts_eng_02', 'tts_eng_03'],
+        sentences_train: ['human_eng_00', 'human_eng_01', 'human_eng_02', 'human_eng_03', 'tts_eng_00', 'tts_eng_01', 'tts_eng_02', 'tts_eng_03']
+      };
+
+      var splitEl = document.getElementById('split');
+      var sampleEl = document.getElementById('sample');
+      var audioEl = document.getElementById('audio');
+      var labelEl = document.getElementById('sample-label');
+      var demoResultsEl = document.getElementById('demo-results');
+      var demoNoResultsEl = document.getElementById('demo-no-results');
+      var demoReferenceEl = document.getElementById('demo-reference');
+      var demoPredictedEl = document.getElementById('demo-predicted');
+      var demoWhisperEl = document.getElementById('demo-whisper');
+
+      var resultsByKey = {};
+      var demoJsonLoaded = false;
+
+      function tryRenderLatex(el, latexStr) {
+        if (!latexStr || !window.katex) {
+          el.textContent = latexStr || '—';
+          return;
+        }
+        var s = latexStr.trim().replace(/^\$+|\$+$/g, '');
+        if (!s) {
+          el.textContent = '—';
+          return;
+        }
+        try {
+          katex.render(s, el, { displayMode: true, throwOnError: false });
+        } catch (e) {
+          el.textContent = latexStr;
+        }
+      }
+
+      function updateDemoResults() {
+        var split = splitEl.value;
+        var name = sampleEl.value;
+        if (!name) return;
+        var key = split + '/' + name;
+        var data = resultsByKey[key];
+        if (data) {
+          demoResultsEl.style.display = 'block';
+          demoNoResultsEl.style.display = 'none';
+          tryRenderLatex(demoReferenceEl, data.reference_latex);
+          tryRenderLatex(demoPredictedEl, data.predicted_latex);
+          demoWhisperEl.textContent = data.whisper_transcription || '—';
+        } else {
+          demoResultsEl.style.display = 'none';
+          demoNoResultsEl.style.display = demoJsonLoaded ? 'block' : 'none';
+        }
+      }
+
+      function updatePlayer() {
+        var split = splitEl.value;
+        var name = sampleEl.value;
+        if (!name) return;
+        var url = GITHUB_RAW + '/sample_datasets/' + split + '/' + name + '.wav';
+        audioEl.src = url;
+        labelEl.textContent = split + ' / ' + name + '.wav';
+        updateDemoResults();
+      }
+
+      function fillSamples() {
+        var split = splitEl.value;
+        var list = SAMPLES[split] || [];
+        sampleEl.innerHTML = '';
+        list.forEach(function (name) {
+          var opt = document.createElement('option');
+          opt.value = name;
+          opt.textContent = name + '.wav';
+          sampleEl.appendChild(opt);
+        });
+        updatePlayer();
+      }
+
+      fetch(GITHUB_RAW + '/docs/demo_results.json')
+        .then(function (r) { return r.ok ? r.json() : null; })
+        .then(function (data) {
+          if (data && data.results && Array.isArray(data.results)) {
+            data.results.forEach(function (item) {
+              var key = item.split + '/' + item.sample_id;
+              resultsByKey[key] = {
+                reference_latex: item.reference_latex,
+                predicted_latex: item.predicted_latex,
+                whisper_transcription: item.whisper_transcription
+              };
+            });
+            demoJsonLoaded = true;
+            updateDemoResults();
+          }
+        })
+        .catch(function () {});
+
+      splitEl.addEventListener('change', fillSamples);
+      sampleEl.addEventListener('change', updatePlayer);
+      fillSamples();
+    })();
+  </script>
+</body>
+</html>
