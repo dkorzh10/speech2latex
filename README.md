@@ -1,14 +1,14 @@
 # Speech-to-LaTeX
 
 [![Paper](https://img.shields.io/badge/arXiv-2508.03542-b31b1b.svg)](https://arxiv.org/abs/2508.03542)
-[![Project page](https://img.shields.io/badge/Project%20Page-GitHub%20Pages-0969da.svg)](https://mrsndmn.github.io/speech2latex/)
+[![Project page](https://img.shields.io/badge/Project%20Page-GitHub%20Pages-0969da.svg)](https://dkorz10.github.io/speech2latex/)
 [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/dkorzh10/speech2latex/blob/main/demo_speech2latex.ipynb)
 
 Converting spoken mathematical expressions into LaTeX: models, datasets, and benchmarks for **S2L-equations** and **S2L-sentences** in English and Russian.
 
 **Paper:** [Speech-to-LaTeX: New Models and Datasets for Converting Spoken Equations and Sentences](https://arxiv.org/abs/2508.03542) (arXiv:2508.03542)
 
-**Project page (demos & samples):** [GitHub Pages](https://mrsndmn.github.io/speech2latex/) — enable in repo **Settings → Pages → Source: Deploy from branch → Branch: main (or master) → /docs**.
+**Project page (demos & samples):** [GitHub Pages](https://dkorz10.github.io/speech2latex/) — enable in repo **Settings → Pages → Source: Deploy from branch → Branch: main (or master) → /docs**.
 
 **Colab demo:** [Open in Colab](https://colab.research.google.com/github/dkorzh10/speech2latex/blob/main/demo_speech2latex.ipynb) — run ASR post-correction in the browser; choose a model, play repo samples (no dataset download), or record/upload your own audio.
 
@@ -122,7 +122,7 @@ CLI: `python src/s2l/eval.py --csv-data <path> --pred-column model_prediction --
 
 ### Demo results for project page
 
-Run the Qwen checkpoint on repo sample audio and save JSON for the [project page](https://mrsndmn.github.io/speech2latex/) demo:
+Run the Qwen checkpoint on repo sample audio and save JSON for the [project page](https://dkorz10.github.io/speech2latex/) demo:
 
 ```shell
 cd ASRPostCorrection
