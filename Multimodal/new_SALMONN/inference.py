@@ -83,7 +83,7 @@ def main(path, promt):
 
     _times = []
     mega_time = time.time()
-    for i, row in tqdm.tqdm(df.iterrows()):
+    for i, row in tqdm.tqdm(df.iterrows(), total=len(df)):
         start_time = time.time()
         try:
             wav_path = os.path.join(BASE_DIR, row["audio_path"])
@@ -100,6 +100,8 @@ def main(path, promt):
             predict_latex = ""
             with torch.cuda.amp.autocast(dtype=torch.float16):
                 predict_latex = model.generate(samples, cfg.config.generate, prompts=_prompt)[0].replace("</s>", "").replace("<s>", "").strip()
+            if predict_latex.startswith("$") and predict_latex.endswith("$") and len(predict_latex) > 1:
+                predict_latex = predict_latex[1:-1].strip()
 
             dict_output["gt_latex"].append(gt_latex)
             dict_output["pr_latex"].append(predict_latex)
@@ -112,8 +114,8 @@ def main(path, promt):
             print(e)
         _times.append(time.time() - start_time )
 
-        if i % 10 == 0:
-            break
+        # if i % 3 == 0:
+        #     break
         
     dur = time.time() -  mega_time
     print(sum(_times),dur) 
@@ -123,8 +125,8 @@ def main(path, promt):
     return dict_output["pr_latex"], dict_output["gt_latex"]
 
 if __name__ == "__main__":
-    # test_table_path = "/home/jovyan/shares/SR006.nfs2/shares/SR006.nfs2/speech2latex/dataset_2_creator/splitter/final/old_splits/tests/human_test.csv"
-    # output_metrics_path = "/home/jovyan/Nikita/speech2latex/salmonn_exps/output/final/train_human/human_test_metrics.xlsx"
+    # test_table_path = ""
+    # output_metrics_path = ""
     prompt = "Recognize the speech and convert the content into text. Any mathematical expressions should be transcribed in LaTeX format."
     
 
