@@ -120,7 +120,7 @@
     }
 
     .samples-section {
-      margin-top: 2rem;
+      margin: 2rem 0;
     }
 
     .samples-controls {
@@ -226,6 +226,15 @@
       font-size: 0.9rem;
     }
 
+    .backend {
+      margin-top: 1rem;
+      margin-bottom: 2rem;
+      padding: 1rem;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+    }
+
     footer {
       margin-top: 3rem;
       padding-top: 1.5rem;
@@ -243,6 +252,7 @@
       text-decoration: underline;
     }
   </style>
+  <link rel="stylesheet" href="./bundle.css">
 </head>
 <body>
   <div class="wrap">
@@ -304,6 +314,11 @@
       </div>
     </div>
 
+    <h2>Try</h2>
+    <div class="backend">
+      <div id="root"></div>
+    </div>
+
     <h2>Citation</h2>
     <p class="subtitle">If you use this work, please cite:</p>
     <div class="contributions" style="margin-top: 0.5rem;">
@@ -324,6 +339,7 @@
 
   <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js" crossorigin="anonymous"></script>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css" crossorigin="anonymous">
+  <script src="./bundle.js"></script>
   <script>
     (function () {
       var GITHUB_RAW = 'https://raw.githubusercontent.com/dkorzh10/speech2latex/refs/heads/main';
