@@ -200,12 +200,14 @@ python EngTTS/tts.py
 ## Citation
 
 ```bibtex
-@inproceedings{
-korzh2026speechtolatex,
-title={Speech-to-LaTeX: New Models and Datasets for Converting Spoken Equations and Sentences},
-author={Dmitrii Korzh and Dmitrii Tarasov and Artyom Iudin and Elvir Karimov and Matvey Skripkin and Nikita Kuzmin and Andrey Kuznetsov and Oleg Rogov and Ivan Oseledets},
-booktitle={The Fourteenth International Conference on Learning Representations},
-year={2026},
-url={https://openreview.net/forum?id=gk8WMxzIQP}
+@inproceedings{korzh2026speechtolatex,
+ author = {Korzh, Dmitrii and Tarasov, Dmitrii and Iudin, Artyom and Karimov, Elvir and Skripkin, Matvey and Kuzmin, Nikita and Kuznetsov, Andrey and Rogov, Oleg and Oseledets, Ivan},
+ booktitle = {International Conference on Learning Representations},
+ editor = {C. Vondrick and B. Hariharan and C. Raffel and L. Pinto and D. Yang and A. Faust},
+ pages = {107189--107210},
+ title = {Speech-to-LaTeX: New Models and Datasets for Converting Spoken Equations and Sentences},
+ url = {https://proceedings.iclr.cc/paper_files/paper/2026/file/aee5298251a418aad89618cf6b5e7ccc-Paper-Conference.pdf},
+ volume = {2026},
+ year = {2026}
 }
 ```
