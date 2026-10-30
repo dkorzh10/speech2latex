@@ -62,16 +62,24 @@ def _ensure_latex_with_dollars(s: str, is_equation: bool) -> str:
     return s
 
 
-def _manifest_cache_path(samples_dir: str, dataset_name: str) -> str:
-    """Default cache path for build_manifest_from_hf (parent of samples_dir, dataset in filename)."""
+def _manifest_cache_path(
+    samples_dir: str, dataset_name: str,
+    whisper_name: str = "large-v3", language: str = "auto",
+) -> str:
+    """Keep manifests separate for each dataset, ASR checkpoint, and language hint."""
     safe_name = dataset_name.replace("/", "_")
-    return os.path.join(os.path.dirname(samples_dir), f".demo_manifest_cache_{safe_name}.csv")
+    filename = f".demo_manifest_cache_{safe_name}_{whisper_name}_{language}.csv"
+    return os.path.join(os.path.dirname(samples_dir), filename)
 
 
-def build_manifest_from_hf(samples_dir: str, dataset_name: str = "marsianin500/Speech2Latex", cache_path: str | None = None, use_cache: bool = True) -> pd.DataFrame:
+def build_manifest_from_hf(
+    samples_dir: str, dataset_name: str = "marsianin500/Speech2Latex",
+    cache_path: str | None = None, use_cache: bool = True,
+    whisper_name: str = "large-v3", language: str = "auto",
+) -> pd.DataFrame:
     """Load HF dataset per split, match samples by (is_tts, language) order, run Whisper on local wavs. Uses CSV cache if present."""
     if cache_path is None:
-        cache_path = _manifest_cache_path(samples_dir, dataset_name)
+        cache_path = _manifest_cache_path(samples_dir, dataset_name, whisper_name, language)
     if use_cache and os.path.isfile(cache_path):
         print(f"Loading manifest from cache: {cache_path}")
         return pd.read_csv(cache_path)
@@ -82,7 +90,7 @@ def build_manifest_from_hf(samples_dir: str, dataset_name: str = "marsianin500/S
 
     device = "cuda" if torch.cuda.is_available() else "cpu"
     print("device", device)
-    whisper_model = whisper.load_model("base", device=device)
+    whisper_model = whisper.load_model(whisper_name, device=device)
 
     rows = []
     for split, sample_ids in tqdm(SAMPLE_IDS.items(), desc="Loading dataset"):
@@ -127,7 +135,10 @@ def build_manifest_from_hf(samples_dir: str, dataset_name: str = "marsianin500/S
             audio_np = audio_array.squeeze().numpy().astype("float32")
 
             with torch.no_grad():
-                result = whisper_model.transcribe(audio_np, language="en" if "eng" in sample_id else "ru", fp16=(device == "cuda"))
+                result = whisper_model.transcribe(
+                    audio_np, language=None if language == "auto" else language,
+                    fp16=(device == "cuda"),
+                )
             whisper_text = (result.get("text") or "").strip()
 
             rows.append({
@@ -154,6 +165,11 @@ def main():
                         help="Ignore cached manifest and rebuild from HuggingFace + Whisper")
     parser.add_argument("--cuda", type=int, default=0)
     parser.add_argument("--batch_size", type=int, default=8)
+    parser.add_argument(
+        "--whisper_model", default="large-v3",
+        choices=["tiny", "base", "small", "medium", "large-v2", "large-v3"],
+    )
+    parser.add_argument("--whisper_language", choices=["auto", "en", "ru"], default="auto")
     args = parser.parse_args()
 
     repo_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -167,7 +183,10 @@ def main():
                 sys.exit(f"CSV must have column: {col}")
     else:
         print("Building manifest from HuggingFace + Whisper on local wavs...")
-        df = build_manifest_from_hf(samples_dir, use_cache=not args.no_cache_manifest)
+        df = build_manifest_from_hf(
+            samples_dir, use_cache=not args.no_cache_manifest,
+            whisper_name=args.whisper_model, language=args.whisper_language,
+        )
         print(f"Got {len(df)} samples")
     df = df.fillna({"whisper_transcription": "", "reference_latex": ""})
 
@@ -227,6 +246,13 @@ def main():
 
     out_data = {
         "checkpoint": os.path.abspath(ckpt_path),
+        "asr": (
+            {"source": "csv", "path": os.path.abspath(args.samples_csv)}
+            if args.samples_csv else {
+                "source": "openai-whisper", "model": args.whisper_model,
+                "language": args.whisper_language,
+            }
+        ),
         "results": results,
     }
     out_path = args.output

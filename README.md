@@ -12,6 +12,9 @@ Converting spoken mathematical expressions into LaTeX: models, datasets, and ben
 
 **Colab demo:** [Open in Colab](https://colab.research.google.com/github/dkorzh10/speech2latex/blob/main/demo_speech2latex.ipynb) — run ASR post-correction in the browser; choose a model, play repo samples (no dataset download), or record/upload your own audio.
 
+The demo uses local Whisper Large-v3 with automatic language detection and reuses
+the loaded Whisper model across recordings. A GPU runtime is recommended.
+
 ---
 
 ## Main contributions
@@ -30,6 +33,16 @@ Converting spoken mathematical expressions into LaTeX: models, datasets, and ben
 | `ASRPostCorrection/` | ASR post-correction training and evaluation |
 | `Multimodal/` | Gemma and SALMONN for Speech2LaTeX |
 | `sample_datasets/` | Sample audio (equations & sentences, train/test) |
+
+### Usage arms
+
+- Colab demo: `demo_speech2latex.ipynb`.
+- Project-page samples: `ASRPostCorrection/run_qwen_demo.py`; output `docs/demo_results.json`.
+- ASR post-correction training/evaluation: `ASRPostCorrection/`.
+- Speech baselines: `MathSpeech/`.
+- Audio model training/inference: `Multimodal/`.
+- LaTeX normalization: `ProcessLaTeXFormulaTools/process_formula/normalize_formulas.py`.
+- Metrics: `src/s2l/eval.py`.
 
 ---
 
@@ -130,6 +143,13 @@ PYTHONPATH=. python run_qwen_demo.py --ckpt /path/to/checkpoint --output ../docs
 ```
 
 Without `--samples_csv`: the script loads HuggingFace `marsianin500/Speech2Latex`, matches samples to `sample_datasets/`, runs Whisper on local wavs, then Qwen. With `--samples_csv`: use a CSV with columns `split`, `sample_id`, `whisper_transcription`, `reference_latex`. Commit `docs/demo_results.json` so the project page can show reference vs predicted LaTeX per sample.
+
+ASR defaults are Whisper `large-v3` and language `auto`; override with
+`--whisper_model` and `--whisper_language`. Manifest caches are separated by ASR
+model and language, so legacy `base` transcriptions are not reused by default.
+Generated JSON records ASR settings or the external CSV source. Existing checked-in
+`docs/demo_results.json` is a precomputed snapshot and must be regenerated to reflect
+these defaults.
 
 ### Upload checkpoints to Hugging Face
 
