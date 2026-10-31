@@ -1,0 +1,8 @@
+{
+  "source_repository": "https://gitlab.2a2i.org/dev/speech2latex",
+  "source_commit": "0371b3d3377055d2346c9efcce251c6d590305a3",
+  "frontend_tree": "92d6d1d7a641e36f19b3d65279412b82ffd3b3fe",
+  "api_base_url": "https://speech2latex.axxx.tech",
+  "build_command": "VITE_API_URL=https://speech2latex.axxx.tech npm run build",
+  "bundle_sha256": "b680939eeb9958c32427850cd0661c904eac5152d0148fda16f679f7e5d7e132"
+}

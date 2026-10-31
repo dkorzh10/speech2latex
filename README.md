@@ -37,6 +37,7 @@ the loaded Whisper model across recordings. A GPU runtime is recommended.
 ### Usage arms
 
 - Colab demo: `demo_speech2latex.ipynb`.
+- Project-page live recording: `docs/index.html`, `docs/bundle.js`; source/build notes in `docs/README.md`.
 - Project-page samples: `ASRPostCorrection/run_qwen_demo.py`; output `docs/demo_results.json`.
 - ASR post-correction training/evaluation: `ASRPostCorrection/`.
 - Speech baselines: `MathSpeech/`.
