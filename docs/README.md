@@ -8,6 +8,10 @@ The selector includes Math-1.5B and Qwen-0.5B equation/sentence checkpoints. The
 backend endpoint is recorded in `frontend-build.json` alongside the source commit
 and bundle checksum. No API secret belongs in this frontend build.
 
+For sentence-model results, ordinary words are displayed as text. Only `$...$`
+and `$$...$$` spans are rendered as inline and display math respectively. Equation
+models render their full output as one formula. Copy preserves the original text.
+
 To refresh the selector, run in the service's `frontend/` checkout:
 
 ```sh
