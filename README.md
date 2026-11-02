@@ -143,7 +143,13 @@ cd ASRPostCorrection
 PYTHONPATH=. python run_qwen_demo.py --ckpt /path/to/checkpoint --output ../docs/demo_results.json
 ```
 
-Without `--samples_csv`: the script loads HuggingFace `marsianin500/Speech2Latex`, matches samples to `sample_datasets/`, runs Whisper on local wavs, then Qwen. With `--samples_csv`: use a CSV with columns `split`, `sample_id`, `whisper_transcription`, `reference_latex`. Commit `docs/demo_results.json` so the project page can show reference vs predicted LaTeX per sample. The page displays only the manually selected successful equation examples listed in `docs/demo_showcase.json`, with test and training examples labeled separately. Keep this selection file when regenerating predictions, and recheck selected outputs before publishing; the full prediction snapshot remains available in `docs/demo_results.json`.
+Without `--samples_csv`: the script loads HuggingFace `marsianin500/Speech2Latex`, matches samples to `sample_datasets/`, runs Whisper on local wavs, then Qwen. With `--samples_csv`: use a CSV with columns `split`, `sample_id`, `whisper_transcription`, `reference_latex`. Commit `docs/demo_results.json` so the project page can show reference vs predicted LaTeX per sample. The page displays only the manually selected successful equation and sentence examples listed in `docs/demo_showcase.json`, with test and training examples labeled separately. Keep this selection file when regenerating predictions, and recheck selected outputs before publishing; the full prediction snapshot remains available in `docs/demo_results.json`. Sentence predictions are stored separately in `docs/demo_sentence_results.json` with the published model revision and input snapshot hash. Regenerate them from the cached Whisper inputs with:
+
+```sh
+uv run --no-project --python .venv/bin/python python ASRPostCorrection/run_sentence_demo.py --model math-1.5b
+```
+
+The generator uses the training prompt and only Whisper text as model input. It never sends reference LaTeX to the model. The page renders sentence prose as text and only delimited math with KaTeX.
 
 ASR defaults are Whisper `large-v3` and language `auto`; override with
 `--whisper_model` and `--whisper_language`. Manifest caches are separated by ASR

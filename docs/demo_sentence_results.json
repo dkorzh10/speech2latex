@@ -1,0 +1,168 @@
+{
+  "model_id": "marsianin500/Qwen2.5-math-1.5B-instruct-sentences_eng_mix",
+  "model_revision": "94bc54a177a65621310b79ebda5f563810e1d934",
+  "input_snapshot_sha256": "fe43b1dd463a9b933ca56dd0427696b1b434f92e8b0ff96ff778f2a6eaa4a6e2",
+  "asr_source": "Cached whisper_transcription fields from the input snapshot; original ASR model was not recorded.",
+  "results": [
+    {
+      "split": "sentences_test",
+      "sample_id": "human_eng_00",
+      "audio_path": "sample_datasets/sentences_test/human_eng_00.wav",
+      "reference_latex": "Given a fixed graph $F$, a typical problem in extremal graph theory asks for the maximum number of edges that a large graph $G$ on $n$ vertices containing no copy of $F$ can have, denoted by $\\text{ex}(n,F)$.",
+      "whisper_transcription": "Given a fixed graph F, a typical problem in extreme graph theory asks for the maximum number of edges that have large graph G on n vertices containing no copy of F can have denote by x of n F.",
+      "model_id": "marsianin500/Qwen2.5-math-1.5B-instruct-sentences_eng_mix",
+      "predicted_latex": "Given a fixed graph $F$, a typical problem in extremal graph theory asks for the maximum number of edges that a $F$-free graph $G$ on $n$ vertices can have, denoted by $\\mathrm{ex}(n,F)$.",
+      "hit_token_limit": false
+    },
+    {
+      "split": "sentences_test",
+      "sample_id": "human_eng_01",
+      "audio_path": "sample_datasets/sentences_test/human_eng_01.wav",
+      "reference_latex": "Given a fixed graph $F$, a typical problem in extremal graph theory asks for the maximum number of edges that a large graph $G$ on $n$ vertices containing no copy of $F$ can have, denoted by $\\text{ex}(n,F)$.",
+      "whisper_transcription": "Given a fixed graph capital F, a typical problem in external graph theory asks for the maximum number of edges, the large graph capital G on N, where the size containing no copy of capital F can have, denoted by X of N capital F.",
+      "model_id": "marsianin500/Qwen2.5-math-1.5B-instruct-sentences_eng_mix",
+      "predicted_latex": "Given a fixed graph $F$, a typical problem in extremal graph theory asks for the maximum number of edges a $G$ on $n$ vertices can have without containing $F$, denoted by $\\mathrm{ex}(n,F)$.",
+      "hit_token_limit": false
+    },
+    {
+      "split": "sentences_test",
+      "sample_id": "human_eng_02",
+      "audio_path": "sample_datasets/sentences_test/human_eng_02.wav",
+      "reference_latex": "We will omit the subscript $\\mathcal P$ or $\\mathcal S$ if it is clear from the context.",
+      "whisper_transcription": "We will omit the subscript script B or script S if it is clear from the context.",
+      "model_id": "marsianin500/Qwen2.5-math-1.5B-instruct-sentences_eng_mix",
+      "predicted_latex": "We will omit the subscript $\\mathcal\\\\B$ or $\\mathcal\\\\S$ if it is clear from the context.",
+      "hit_token_limit": false
+    },
+    {
+      "split": "sentences_test",
+      "sample_id": "human_eng_03",
+      "audio_path": "sample_datasets/sentences_test/human_eng_03.wav",
+      "reference_latex": "We will omit the subscript $\\mathcal P$ or $\\mathcal S$ if it is clear from the context.",
+      "whisper_transcription": "We will augment the subscript, script p or script s if it's clear from the context.",
+      "model_id": "marsianin500/Qwen2.5-math-1.5B-instruct-sentences_eng_mix",
+      "predicted_latex": "We will augment $\\mathfrak\\\\p$ or $\\mathfrak\\\\s$ if it is clear from the context.",
+      "hit_token_limit": false
+    },
+    {
+      "split": "sentences_test",
+      "sample_id": "tts_eng_00",
+      "audio_path": "sample_datasets/sentences_test/tts_eng_00.wav",
+      "reference_latex": "Given a fixed graph $F$, a typical problem in extremal graph theory asks for the maximum number of edges that a large graph $G$ on $n$ vertices containing no copy of $F$ can have, denoted by $\\text{ex}(n,F)$.",
+      "whisper_transcription": "Given a fixed graph F, a typical problem in extremal graph theory asks for the maximum number of edges that a large graph G on N vertices containing no copy of F can have denoted by X of N comma F N.",
+      "model_id": "marsianin500/Qwen2.5-math-1.5B-instruct-sentences_eng_mix",
+      "predicted_latex": "Given a fixed graph $F$, a typical problem in extremal graph theory asks for the maximum number of edges that a large graph $G$ on $n$ vertices containing no copy of $F$ can have, denoted by $\\mathrm{ex}(n,F)$.",
+      "hit_token_limit": false
+    },
+    {
+      "split": "sentences_test",
+      "sample_id": "tts_eng_01",
+      "audio_path": "sample_datasets/sentences_test/tts_eng_01.wav",
+      "reference_latex": "Given a fixed graph $F$, a typical problem in extremal graph theory asks for the maximum number of edges that a large graph $G$ on $n$ vertices containing no copy of $F$ can have, denoted by $\\text{ex}(n,F)$.",
+      "whisper_transcription": "Given a fixed graph F, a typical problem in extremal graph theory asks for the maximum number of edges that a large graph G on N vertices containing no copy of F can have denoted by XNFF.",
+      "model_id": "marsianin500/Qwen2.5-math-1.5B-instruct-sentences_eng_mix",
+      "predicted_latex": "Given a fixed graph $F$, a typical problem in extremal graph theory asks for the maximum number of edges that a large graph $G$ on $n$ vertices containing no copy of $F$ can have, denoted by $ex(n,F)$.",
+      "hit_token_limit": false
+    },
+    {
+      "split": "sentences_test",
+      "sample_id": "tts_eng_02",
+      "audio_path": "sample_datasets/sentences_test/tts_eng_02.wav",
+      "reference_latex": "Given a fixed graph $F$, a typical problem in extremal graph theory asks for the maximum number of edges that a large graph $G$ on $n$ vertices containing no copy of $F$ can have, denoted by $\\text{ex}(n,F)$.",
+      "whisper_transcription": "Given a fixed graph F, a typical problem in extreme graph theory asks for the maximum number of edges that a large graph, G-on and vertices containing NO, copy of F can have denoted by X of N, F.",
+      "model_id": "marsianin500/Qwen2.5-math-1.5B-instruct-sentences_eng_mix",
+      "predicted_latex": "Given a fixed graph $F$, a typical problem in extremal graph theory asks for the maximum number of edges that a large graph $G$ on $n$ vertices containing no copy of $F$ can have, denoted by $\\mathrm{ex}(n,F)$.",
+      "hit_token_limit": false
+    },
+    {
+      "split": "sentences_test",
+      "sample_id": "tts_eng_03",
+      "audio_path": "sample_datasets/sentences_test/tts_eng_03.wav",
+      "reference_latex": "Given a fixed graph $F$, a typical problem in extremal graph theory asks for the maximum number of edges that a large graph $G$ on $n$ vertices containing no copy of $F$ can have, denoted by $\\text{ex}(n,F)$.",
+      "whisper_transcription": "given a fixed graph F. A typical problem in extreme graph theory asks for the maximum number of edges that a large graph, G-on, and vertices containing no copy of F can have denoted by X and F.",
+      "model_id": "marsianin500/Qwen2.5-math-1.5B-instruct-sentences_eng_mix",
+      "predicted_latex": "Given a fixed graph $F$, a typical problem in extremal graph theory asks for the maximum number of edges that a large graph $G$ on $n$ vertices containing no copy of $F$ can have, denoted by $\\mathrm{ex}(n,F)$.",
+      "hit_token_limit": false
+    },
+    {
+      "split": "sentences_train",
+      "sample_id": "human_eng_00",
+      "audio_path": "sample_datasets/sentences_train/human_eng_00.wav",
+      "reference_latex": "The smaller the value of $\\eta$, the harder it is for a human to perceive the perturbation in the image, and on the other hand, a larger $1-\\delta$ value (i.e., a smaller $\\delta$ value) implies a stronger attack that is more powerful for generating a desired perturbation.",
+      "whisper_transcription": "The smaller the value of it, the harder it is for a human to perceive the perturbation in the image. And on the other hand, a larger one minus delta value, that is a smaller delta value, implies a stronger attack that is small powerful for generating a desired perturbation.",
+      "model_id": "marsianin500/Qwen2.5-math-1.5B-instruct-sentences_eng_mix",
+      "predicted_latex": "The smaller the value of $\\eta$, the harder it is for a human to perceive the perturbation in the image, and on the other hand, a larger $1-\\delta$ value (i.e., smaller $\\delta$ value) implies a stronger attack that is small powerful for generating a desired perturbation.",
+      "hit_token_limit": false
+    },
+    {
+      "split": "sentences_train",
+      "sample_id": "human_eng_01",
+      "audio_path": "sample_datasets/sentences_train/human_eng_01.wav",
+      "reference_latex": "The smaller the value of $\\eta$, the harder it is for a human to perceive the perturbation in the image, and on the other hand, a larger $1-\\delta$ value (i.e., a smaller $\\delta$ value) implies a stronger attack that is more powerful for generating a desired perturbation.",
+      "whisper_transcription": "The smaller the value of eta, the harder it is for a human to perceive the perturbation in the image and on other hand, a larger 1-delta value, i.e. smaller delta value, implies a stronger attack that is more powerful for generating a desired perturbation.",
+      "model_id": "marsianin500/Qwen2.5-math-1.5B-instruct-sentences_eng_mix",
+      "predicted_latex": "The smaller the value of $\\eta$, the harder it is for a human to perceive the perturbation in the image, and on the other hand, a larger (1-$\\delta$) value, i.e., smaller $\\delta$ value, implies a stronger attack that is more powerful for generating a desired perturbation.",
+      "hit_token_limit": false
+    },
+    {
+      "split": "sentences_train",
+      "sample_id": "human_eng_02",
+      "audio_path": "sample_datasets/sentences_train/human_eng_02.wav",
+      "reference_latex": "Also look at the following rows where high accuracies are attained with $S_{\\zeta_{d}}$ and $S_{\\chi_{D}}$.",
+      "whisper_transcription": "Also, look at the phone rows where high-quarances are retained with capital S subscript D and capital S subscript KI subscript capital D.",
+      "model_id": "marsianin500/Qwen2.5-math-1.5B-instruct-sentences_eng_mix",
+      "predicted_latex": "Also look at the plots where high qudits are attained with $\\mathcal\\\\S_{d}$ and $\\mathcal\\\\S_{k}$.",
+      "hit_token_limit": false
+    },
+    {
+      "split": "sentences_train",
+      "sample_id": "human_eng_03",
+      "audio_path": "sample_datasets/sentences_train/human_eng_03.wav",
+      "reference_latex": "Also look at the following rows where high accuracies are attained with $S_{\\zeta_{d}}$ and $S_{\\chi_{D}}$.",
+      "whisper_transcription": "Also look at the following rows where height accuracies are detained with S, NZD and S,",
+      "model_id": "marsianin500/Qwen2.5-math-1.5B-instruct-sentences_eng_mix",
+      "predicted_latex": "Also look at the following rows where height accuracies are worse with $S_{\\mathrm{in}}$ and $S_{\\mathrm{out}}$.",
+      "hit_token_limit": false
+    },
+    {
+      "split": "sentences_train",
+      "sample_id": "tts_eng_00",
+      "audio_path": "sample_datasets/sentences_train/tts_eng_00.wav",
+      "reference_latex": "We minimize the above effective-Hamiltonian with respect to the parameters $r_{1},r_{2},r_{3},r_{4}$, and $\\theta_{12},\\theta_{13},\\theta_{14},\\theta_{23},\\theta_{24},\\theta_{34}$ respectively and obtain the corresponding ground state energy $\\epsilon_{\\infty}=-0.875837$.",
+      "whisper_transcription": "We minimise the above effective Hamiltonian with respect to the parameters. R1, R2, R3, R4 and Vita 12, Vita 13, Vita 14, Vita 23, Vita 24, Vita 24, Vita 34 and 7. Infinity. Equalist.",
+      "model_id": "marsianin500/Qwen2.5-math-1.5B-instruct-sentences_eng_mix",
+      "predicted_latex": "We minimize the above effective-Hamiltonian with respect to the parameters $r_{1},r_{2},r_{3},r_{4}$, and $\\epsilon_{12},\\epsilon_{13},\\epsilon_{14},\\epsilon_{23},\\epsilon_{24},\\epsilon_{34}$ with periodic boundary conditions and $N_{\\mathrm{sites}}\\rightarrow\\infty$.",
+      "hit_token_limit": false
+    },
+    {
+      "split": "sentences_train",
+      "sample_id": "tts_eng_01",
+      "audio_path": "sample_datasets/sentences_train/tts_eng_01.wav",
+      "reference_latex": "We minimize the above effective-Hamiltonian with respect to the parameters $r_{1},r_{2},r_{3},r_{4}$, and $\\theta_{12},\\theta_{13},\\theta_{14},\\theta_{23},\\theta_{24},\\theta_{34}$ respectively and obtain the corresponding ground state energy $\\epsilon_{\\infty}=-0.875837$.",
+      "whisper_transcription": "We minimize the above effective Hamiltonian with respect to the parameters R sub 1, R sub 2, R sub 3, R sub 3, R sub 4, and the theta sub 14, theta sub 14, theta sub 23, theta sub 14, theta sub 23, theta sub 24, theta sub 34, respectively, and obtain the corresponding ground. St. Energy epsilon.",
+      "model_id": "marsianin500/Qwen2.5-math-1.5B-instruct-sentences_eng_mix",
+      "predicted_latex": "We minimize the above effective-Hamiltonian with respect to the parameters $r_{1},r_{2},r_{3},r_{4}$, and $\\theta_{12},\\theta_{13},\\theta_{14},\\theta_{23},\\theta_{24},\\theta_{34}$ respectively and obtain the corresponding ground state energy $\\epsilon=-0.875837$.",
+      "hit_token_limit": false
+    },
+    {
+      "split": "sentences_train",
+      "sample_id": "tts_eng_02",
+      "audio_path": "sample_datasets/sentences_train/tts_eng_02.wav",
+      "reference_latex": "We minimize the above effective-Hamiltonian with respect to the parameters $r_{1},r_{2},r_{3},r_{4}$, and $\\theta_{12},\\theta_{13},\\theta_{14},\\theta_{23},\\theta_{24},\\theta_{34}$ respectively and obtain the corresponding ground state energy $\\epsilon_{\\infty}=-0.875837$.",
+      "whisper_transcription": "We minimize the above effective Hamiltonian with respect to the parameters R1, R2, R3, R4, and theta 12, theta 13, theta 14, theta 23, theta 24, THETA 30 for respectively and obtain the corresponding ground state energy epsilon infinity equals negative 0.8, 75837.",
+      "model_id": "marsianin500/Qwen2.5-math-1.5B-instruct-sentences_eng_mix",
+      "predicted_latex": "We minimize the above effective-Hamiltonian with respect to the parameters $r_{1},r_{2},r_{3},r_{4}$, and $\\theta_{12},\\theta_{13},\\theta_{14},\\theta_{23},\\theta_{24},\\theta_{34}$ for respectively and obtain the corresponding ground state energy $\\epsilon_{\\infty}=-0.875837$.",
+      "hit_token_limit": false
+    },
+    {
+      "split": "sentences_train",
+      "sample_id": "tts_eng_03",
+      "audio_path": "sample_datasets/sentences_train/tts_eng_03.wav",
+      "reference_latex": "We minimize the above effective-Hamiltonian with respect to the parameters $r_{1},r_{2},r_{3},r_{4}$, and $\\theta_{12},\\theta_{13},\\theta_{14},\\theta_{23},\\theta_{24},\\theta_{34}$ respectively and obtain the corresponding ground state energy $\\epsilon_{\\infty}=-0.875837$.",
+      "whisper_transcription": "We minimize the above effective Hamiltonian with respect to the parameters R1, R2, R3, R4, and theta 12, theta 3, theta 43, theta 34, theta 34, theta 34, theta 34, theta 34 respectively, and obtain the corresponding ground state energy epsilon.",
+      "model_id": "marsianin500/Qwen2.5-math-1.5B-instruct-sentences_eng_mix",
+      "predicted_latex": "We minimize the above effective-Hamiltonian with respect to the parameters $r_{1},r_{2},r_{3},r_{4}$, and $\\theta_{12},\\theta_{13},\\theta_{14},\\theta_{23},\\theta_{24},\\theta_{34}$ respectively and obtain the corresponding ground state energy $\\epsilon=-0.8758378277$.",
+      "hit_token_limit": false
+    }
+  ]
+}

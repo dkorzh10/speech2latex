@@ -48,5 +48,20 @@
     "split": "equations_train",
     "sample_id": "tts_ru_03",
     "label": "TTS · RU · Gaussian integral"
+  },
+  {
+    "split": "sentences_test",
+    "sample_id": "human_eng_00",
+    "label": "Human · EN · Extremal graph theory"
+  },
+  {
+    "split": "sentences_test",
+    "sample_id": "tts_eng_00",
+    "label": "TTS · EN · Extremal graph theory"
+  },
+  {
+    "split": "sentences_train",
+    "sample_id": "human_eng_01",
+    "label": "Human · EN · Perturbations, eta and delta"
   }
 ]

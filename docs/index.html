@@ -209,7 +209,7 @@
     .demo-results .latex-block {
       font-family: var(--mono);
       font-size: 0.9rem;
-      word-break: break-all;
+      overflow-wrap: anywhere;
       padding: 0.5rem;
       background: var(--bg);
       border-radius: 4px;
@@ -274,8 +274,8 @@
       </ul>
     </div>
 
-    <h2>Selected equation examples (Qwen2.5 0.5B)</h2>
-    <p class="subtitle" style="margin-bottom: 0.5rem;">Hand-picked successful examples from the <a href="https://huggingface.co/datasets/marsianin500/Speech2Latex">published dataset</a>, using <a href="https://huggingface.co/marsianin500/Qwen2.5-0.5B-instruct-equations_multilingual_mix_full">Qwen2.5-0.5B equations</a>. These illustrate successful outputs, not average model accuracy. Test and training examples are labeled separately.</p>
+    <h2>Selected equation and sentence examples</h2>
+    <p class="subtitle" style="margin-bottom: 0.5rem;">Hand-picked successful examples from the <a href="https://huggingface.co/datasets/marsianin500/Speech2Latex">published dataset</a>, using task-specific <a href="https://huggingface.co/marsianin500/Qwen2.5-0.5B-instruct-equations_multilingual_mix_full">equation</a> and <a href="https://huggingface.co/marsianin500/Qwen2.5-math-1.5B-instruct-sentences_eng_mix">sentence</a> models. These illustrate successful outputs, not average model accuracy. Test and training examples are labeled separately.</p>
 
     <div class="samples-section">
       <div class="samples-controls">
@@ -298,6 +298,7 @@
           </div>
           <div class="row">
             <div class="label">Model prediction (ASR post-correction)</div>
+            <p class="subtitle" style="margin: 0 0 0.5rem;"><a id="demo-model" target="_blank" rel="noopener"></a></p>
             <div class="latex-block" id="demo-predicted"></div>
           </div>
           <div class="row">
@@ -349,6 +350,7 @@
       var demoReferenceEl = document.getElementById('demo-reference');
       var demoPredictedEl = document.getElementById('demo-predicted');
       var demoWhisperEl = document.getElementById('demo-whisper');
+      var demoModelEl = document.getElementById('demo-model');
 
       var resultsByKey = {};
       var demoJsonLoaded = false;
@@ -370,6 +372,32 @@
         }
       }
 
+      function renderSentence(el, text) {
+        el.textContent = '';
+        // Keep prose as text nodes; render only delimited math fragments.
+        var pattern = /\$\$([\s\S]+?)\$\$|\$([^$\n]+?)\$|\\\(([\s\S]+?)\\\)|\\\[([\s\S]+?)\\\]/g;
+        var offset = 0;
+        var match;
+        while ((match = pattern.exec(text || '')) !== null) {
+          el.appendChild(document.createTextNode(text.slice(offset, match.index)));
+          var span = document.createElement('span');
+          if (window.katex) {
+            try {
+              katex.render(match[1] || match[2] || match[3] || match[4], span, {
+                displayMode: Boolean(match[1] || match[4]), throwOnError: false
+              });
+            } catch (e) {
+              span.textContent = match[0];
+            }
+          } else {
+            span.textContent = match[0];
+          }
+          el.appendChild(span);
+          offset = pattern.lastIndex;
+        }
+        el.appendChild(document.createTextNode((text || '').slice(offset)));
+      }
+
       function updateDemoResults() {
         var split = splitEl.value;
         var name = sampleEl.value;
@@ -379,8 +407,12 @@
         if (data) {
           demoResultsEl.style.display = 'block';
           demoNoResultsEl.style.display = 'none';
-          tryRenderLatex(demoReferenceEl, data.reference_latex);
-          tryRenderLatex(demoPredictedEl, data.predicted_latex);
+          var render = split.startsWith('sentences_') ? renderSentence : tryRenderLatex;
+          render(demoReferenceEl, data.reference_latex);
+          render(demoPredictedEl, data.predicted_latex);
+          var modelId = data.model_id || 'marsianin500/Qwen2.5-0.5B-instruct-equations_multilingual_mix_full';
+          demoModelEl.textContent = modelId.split('/').pop();
+          demoModelEl.href = 'https://huggingface.co/' + modelId;
           demoWhisperEl.textContent = data.whisper_transcription || '—';
         } else {
           demoResultsEl.style.display = 'none';
@@ -411,7 +443,7 @@
         updatePlayer();
       }
 
-      Promise.all(['demo_results.json', 'demo_showcase.json'].map(function (url) {
+      Promise.all(['demo_results.json', 'demo_showcase.json', 'demo_sentence_results.json'].map(function (url) {
         return fetch(url).then(function (r) {
           if (!r.ok) throw new Error('Examples could not be loaded');
           return r.json();
@@ -420,10 +452,11 @@
         .then(function (files) {
           var data = files[0];
           var showcase = files[1];
-          if (!data || !Array.isArray(data.results) || !Array.isArray(showcase)) {
+          var sentences = files[2];
+          if (!data || !Array.isArray(data.results) || !Array.isArray(showcase) || !sentences || !Array.isArray(sentences.results)) {
             throw new Error('Missing examples');
           }
-          data.results.forEach(function (item) {
+          data.results.concat(sentences.results).forEach(function (item) {
             resultsByKey[item.split + '/' + item.sample_id] = item;
           });
           showcase.forEach(function (item) {
@@ -435,7 +468,8 @@
           Object.keys(samplesBySplit).forEach(function (split) {
             var opt = document.createElement('option');
             opt.value = split;
-            opt.textContent = split.endsWith('_test') ? 'Test examples' : 'Training examples';
+            opt.textContent = (split.startsWith('sentences_') ? 'Sentences' : 'Equations') +
+              (split.endsWith('_test') ? ' · test' : ' · training');
             splitEl.appendChild(opt);
           });
           if (!splitEl.options.length) throw new Error('No examples available');
