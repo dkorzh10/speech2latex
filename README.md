@@ -143,7 +143,7 @@ cd ASRPostCorrection
 PYTHONPATH=. python run_qwen_demo.py --ckpt /path/to/checkpoint --output ../docs/demo_results.json
 ```
 
-Without `--samples_csv`: the script loads HuggingFace `marsianin500/Speech2Latex`, matches samples to `sample_datasets/`, runs Whisper on local wavs, then Qwen. With `--samples_csv`: use a CSV with columns `split`, `sample_id`, `whisper_transcription`, `reference_latex`. Commit `docs/demo_results.json` so the project page can show reference vs predicted LaTeX per sample.
+Without `--samples_csv`: the script loads HuggingFace `marsianin500/Speech2Latex`, matches samples to `sample_datasets/`, runs Whisper on local wavs, then Qwen. With `--samples_csv`: use a CSV with columns `split`, `sample_id`, `whisper_transcription`, `reference_latex`. Commit `docs/demo_results.json` so the project page can show reference vs predicted LaTeX per sample. The page displays only the manually selected successful equation examples listed in `docs/demo_showcase.json`, with test and training examples labeled separately. Keep this selection file when regenerating predictions, and recheck selected outputs before publishing; the full prediction snapshot remains available in `docs/demo_results.json`.
 
 ASR defaults are Whisper `large-v3` and language `auto`; override with
 `--whisper_model` and `--whisper_language`. Manifest caches are separated by ASR

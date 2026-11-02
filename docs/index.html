@@ -274,23 +274,18 @@
       </ul>
     </div>
 
-    <h2>Sample audio (Qwen2.5 0.5B)</h2>
-    <p class="subtitle" style="margin-bottom: 0.5rem;">From <code style="background: var(--surface); padding: 0.15rem 0.4rem; border-radius: 4px;">./sample_datasets/</code> — equations and sentences, train/test, human and TTS (EN/RU where available).</p>
+    <h2>Selected equation examples (Qwen2.5 0.5B)</h2>
+    <p class="subtitle" style="margin-bottom: 0.5rem;">Hand-picked successful examples from the <a href="https://huggingface.co/datasets/marsianin500/Speech2Latex">published dataset</a>, using <a href="https://huggingface.co/marsianin500/Qwen2.5-0.5B-instruct-equations_multilingual_mix_full">Qwen2.5-0.5B equations</a>. These illustrate successful outputs, not average model accuracy. Test and training examples are labeled separately.</p>
 
     <div class="samples-section">
       <div class="samples-controls">
         <div class="control-group">
           <label for="split">Split</label>
-          <select id="split">
-            <option value="equations_test">equations_test</option>
-            <option value="equations_train">equations_train</option>
-            <option value="sentences_test">sentences_test</option>
-            <option value="sentences_train">sentences_train</option>
-          </select>
+          <select id="split" disabled></select>
         </div>
         <div class="control-group">
           <label for="sample">Sample</label>
-          <select id="sample"></select>
+          <select id="sample" disabled></select>
         </div>
       </div>
       <div class="player-box">
@@ -310,7 +305,7 @@
             <div class="latex-block" id="demo-whisper"></div>
           </div>
         </div>
-        <div class="demo-results no-results" id="demo-no-results" style="display: none;">No demo results for this sample. Run <code>run_qwen_demo.py</code> and add <code>docs/demo_results.json</code> to the repo.</div>
+        <div class="demo-results no-results" id="demo-no-results" style="display: none;">Examples are temporarily unavailable. Please try reloading the page.</div>
       </div>
     </div>
 
@@ -343,12 +338,7 @@
   <script>
     (function () {
       var GITHUB_RAW = 'https://raw.githubusercontent.com/dkorzh10/speech2latex/refs/heads/main';
-      var SAMPLES = {
-        equations_test: ['human_eng_00', 'human_eng_01', 'human_eng_02', 'human_eng_03', 'human_ru_00', 'human_ru_01', 'human_ru_02', 'human_ru_03', 'tts_eng_00', 'tts_eng_01', 'tts_eng_02', 'tts_eng_03', 'tts_ru_00', 'tts_ru_01', 'tts_ru_02', 'tts_ru_03'],
-        equations_train: ['human_eng_00', 'human_eng_01', 'human_eng_02', 'human_eng_03', 'human_ru_00', 'human_ru_01', 'human_ru_02', 'human_ru_03', 'tts_eng_00', 'tts_eng_01', 'tts_eng_02', 'tts_eng_03', 'tts_ru_00', 'tts_ru_01', 'tts_ru_02', 'tts_ru_03'],
-        sentences_test: ['human_eng_00', 'human_eng_01', 'human_eng_02', 'human_eng_03', 'tts_eng_00', 'tts_eng_01', 'tts_eng_02', 'tts_eng_03'],
-        sentences_train: ['human_eng_00', 'human_eng_01', 'human_eng_02', 'human_eng_03', 'tts_eng_00', 'tts_eng_01', 'tts_eng_02', 'tts_eng_03']
-      };
+      var samplesBySplit = {};
 
       var splitEl = document.getElementById('split');
       var sampleEl = document.getElementById('sample');
@@ -410,38 +400,57 @@
 
       function fillSamples() {
         var split = splitEl.value;
-        var list = SAMPLES[split] || [];
+        var list = samplesBySplit[split] || [];
         sampleEl.innerHTML = '';
-        list.forEach(function (name) {
+        list.forEach(function (item) {
           var opt = document.createElement('option');
-          opt.value = name;
-          opt.textContent = name + '.wav';
+          opt.value = item.sample_id;
+          opt.textContent = item.label;
           sampleEl.appendChild(opt);
         });
         updatePlayer();
       }
 
-      fetch(GITHUB_RAW + '/docs/demo_results.json')
-        .then(function (r) { return r.ok ? r.json() : null; })
-        .then(function (data) {
-          if (data && data.results && Array.isArray(data.results)) {
-            data.results.forEach(function (item) {
-              var key = item.split + '/' + item.sample_id;
-              resultsByKey[key] = {
-                reference_latex: item.reference_latex,
-                predicted_latex: item.predicted_latex,
-                whisper_transcription: item.whisper_transcription
-              };
-            });
-            demoJsonLoaded = true;
-            updateDemoResults();
+      Promise.all(['demo_results.json', 'demo_showcase.json'].map(function (url) {
+        return fetch(url).then(function (r) {
+          if (!r.ok) throw new Error('Examples could not be loaded');
+          return r.json();
+        });
+      }))
+        .then(function (files) {
+          var data = files[0];
+          var showcase = files[1];
+          if (!data || !Array.isArray(data.results) || !Array.isArray(showcase)) {
+            throw new Error('Missing examples');
           }
+          data.results.forEach(function (item) {
+            resultsByKey[item.split + '/' + item.sample_id] = item;
+          });
+          showcase.forEach(function (item) {
+            var result = resultsByKey[item.split + '/' + item.sample_id];
+            if (!result || !result.reference_latex || !result.predicted_latex) return;
+            if (!samplesBySplit[item.split]) samplesBySplit[item.split] = [];
+            samplesBySplit[item.split].push(item);
+          });
+          Object.keys(samplesBySplit).forEach(function (split) {
+            var opt = document.createElement('option');
+            opt.value = split;
+            opt.textContent = split.endsWith('_test') ? 'Test examples' : 'Training examples';
+            splitEl.appendChild(opt);
+          });
+          if (!splitEl.options.length) throw new Error('No examples available');
+          demoJsonLoaded = true;
+          splitEl.disabled = false;
+          sampleEl.disabled = false;
+          fillSamples();
         })
-        .catch(function () {});
+        .catch(function () {
+          demoResultsEl.style.display = 'none';
+          demoNoResultsEl.style.display = 'block';
+        });
 
       splitEl.addEventListener('change', fillSamples);
       sampleEl.addEventListener('change', updatePlayer);
-      fillSamples();
     })();
   </script>
 </body>

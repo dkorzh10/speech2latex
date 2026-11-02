@@ -1,0 +1,52 @@
+[
+  {
+    "split": "equations_test",
+    "sample_id": "human_eng_01",
+    "label": "Human · EN · Greek letters"
+  },
+  {
+    "split": "equations_test",
+    "sample_id": "human_eng_02",
+    "label": "Human · EN · Definition with a prime"
+  },
+  {
+    "split": "equations_test",
+    "sample_id": "human_ru_01",
+    "label": "Human · RU · Subscript"
+  },
+  {
+    "split": "equations_train",
+    "sample_id": "human_eng_03",
+    "label": "Human · EN · Sets and inclusion"
+  },
+  {
+    "split": "equations_train",
+    "sample_id": "human_ru_00",
+    "label": "Human · RU · Linear equation"
+  },
+  {
+    "split": "equations_train",
+    "sample_id": "human_ru_01",
+    "label": "Human · RU · Linear equation (2)"
+  },
+  {
+    "split": "equations_train",
+    "sample_id": "tts_ru_00",
+    "label": "TTS · RU · Power integral"
+  },
+  {
+    "split": "equations_train",
+    "sample_id": "tts_ru_01",
+    "label": "TTS · RU · Definite integral"
+  },
+  {
+    "split": "equations_train",
+    "sample_id": "tts_ru_02",
+    "label": "TTS · RU · Integral with symbolic bounds"
+  },
+  {
+    "split": "equations_train",
+    "sample_id": "tts_ru_03",
+    "label": "TTS · RU · Gaussian integral"
+  }
+]
