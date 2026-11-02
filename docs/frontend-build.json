@@ -4,5 +4,10 @@
   "frontend_tree": "902e216fddd9ed629426f4b9313984d4313cf57d",
   "api_base_url": "https://speech2latex.axxx.tech",
   "build_command": "VITE_API_URL=https://speech2latex.axxx.tech npm run build",
-  "bundle_sha256": "eeb7216009c6f23be37ecdd3d6e61d0dd4d35ad1498e9ea5af2a854bc6872204"
+  "bundle_sha256": "a59a8bbbf035dc7c9c878634c2855005bcbe40ab121f5e5b0dac674cac1d36e7",
+  "source_patch": "equations-only.patch",
+  "model_keys": [
+    "equations",
+    "equations_05b"
+  ]
 }
