@@ -1,0 +1,12 @@
+--- a/frontend/src/App.tsx
++++ b/frontend/src/App.tsx
+@@ -52,9 +52,7 @@
+ 
+ const MODEL_OPTIONS: { value: ModelKey; label: string; description: string }[] = [
+   { value: 'equations', label: 'Qwen2.5-math-1.5B-instruct', description: 'multilingual mix full' },
+-  { value: 'sentences', label: 'Qwen2.5-math-1.5B-instruct', description: 'sentences eng mix' },
+   { value: 'equations_05b', label: 'Qwen2.5-0.5B-instruct', description: 'multilingual mix full' },
+-  { value: 'sentences_05b', label: 'Qwen2.5-0.5B-instruct', description: 'sentences eng mix' },
+ ]
+ 
+ const MAX_DURATION = 30
